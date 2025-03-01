@@ -1,0 +1,195 @@
+<html>
+<head>
+    <title>Setor Panen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #FFFFF0, #FFE4B5);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+            padding: 20px;
+        }
+        .container {
+            background: #fffaf0;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            margin: 20px 0 20px 50px; 
+        }
+        h2 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #333;
+        }
+        table {
+            width: 90%;
+            margin: 20px 50px;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .edit, .delete {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: none;
+            margin: 2px;
+            font-size: 12px;
+        }
+        .edit {
+            background-color: #f4b400;
+            color: white;
+        }
+        .delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Setor Ternak/Panen</h2>
+        <form id="panenForm">
+            <div class="form-group">
+                <label for="tanggal">Tanggal</label>
+                <input type="date" id="tanggal" name="tanggal" required>
+            </div>
+            <div class="form-group">
+                <label for="hasil">Hasil Ternak/Panen:</label>
+                <input type="text" id="hasil" name="hasil" required oninput="validateTextInput(this)">
+                <span class="error-message" id="error-message">Hanya bisa diisi menggunakan huruf</span>
+            </div>
+            <div class="form-group">
+                <label for="jumlah">Jumlah</label>
+                <input type="text" id="jumlah" name="jumlah" required>
+            </div>
+            <div class="form-group">
+                <label for="satuan">Satuan</label>
+                <select id="satuan" name="satuan">
+                    <option value="ons">Ons</option>
+                    <option value="ml">Mililiter (ml)</option>
+                    <option value="gram">Gram (g)</option>
+                    <option value="liter">Liter (L)</option>
+                    <option value="kilogram">Kilogram (Kg)</option>
+                    <option value="ton">Ton</option>
+                    <option value="kuintal">Kuintal</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Simpan</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Hasil Ternak/Panen</th>
+                <th>Jumlah</th>
+                <th>Satuan</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody id="panenList"></tbody>
+    </table>
+
+    <script>
+        function validateTextInput(input) {
+            let regex = /[^a-zA-Z\s]/g;
+            let errorMessage = document.getElementById("error-message");
+
+            if (regex.test(input.value)) {
+                errorMessage.style.display = "block"; 
+                input.value = input.value.replace(regex, ''); 
+            } else {
+                errorMessage.style.display = "none";
+            }
+        }
+
+        document.getElementById("panenForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let tanggal = document.getElementById("tanggal").value;
+            let hasil = document.getElementById("hasil").value;
+            let jumlah = document.getElementById("jumlah").value;
+            let satuan = document.getElementById("satuan").value;
+
+            if (!tanggal || !hasil || !jumlah) {
+                alert("Harap isi semua kolom");
+                return;
+            }
+
+            let table = document.getElementById("panenList");
+            let row = table.insertRow();
+            row.insertCell(0).innerText = tanggal;
+            row.insertCell(1).innerText = hasil;
+            row.insertCell(2).innerText = jumlah;
+            row.insertCell(3).innerText = satuan;
+
+            let actions = row.insertCell(4);
+            let editButton = document.createElement("button");
+            editButton.innerText = "Edit";
+            editButton.classList.add("edit");
+            editButton.onclick = function() {
+                document.getElementById("tanggal").value = row.cells[0].innerText;
+                document.getElementById("hasil").value = row.cells[1].innerText;
+                document.getElementById("jumlah").value = row.cells[2].innerText;
+                document.getElementById("satuan").value = row.cells[3].innerText;
+                table.deleteRow(row.rowIndex - 1);
+            };
+
+            let deleteButton = document.createElement("button");
+            deleteButton.innerText = "Hapus";
+            deleteButton.classList.add("delete");
+            deleteButton.onclick = function() {
+                table.deleteRow(row.rowIndex - 1);
+            };
+
+            actions.appendChild(editButton);
+            actions.appendChild(deleteButton);
+            document.getElementById("panenForm").reset();
+        });
+    </script>
+</body>
+</html>
