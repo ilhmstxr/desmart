@@ -47,9 +47,6 @@ body {
 
 #username,
 #password {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* margin-bottom: 10px; */
   border-radius: 10px;
 }
 
