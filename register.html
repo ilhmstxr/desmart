@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="register.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="row">
+
+        <div class="kiri">
+            <img src="image/cow.jpeg" alt="">
+        </div>
+        <div class="kanan">
+            <div class="cardRegister">
+                <form class="formRegister" action="post">
+                    <div class="username">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username">
+                    </div>
+                    <div class="password">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="confirm-password">
+                        <label for="confirm-password">confirm Password:</label>
+                        <input type="confirm-password" id="password" name="password">
+                    </div>
+                    <button type="submit" id="register" name="register">Register</button>
+
+            </div>
+            <div>
+
+            </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    let biodataform = document.getElementById('biodataForm');
+    let username = document.getElementById('username');
+    let password = document.getElementById('nik');
+    const regex = /^[a-zA-Z '.]+$/;
+
+    biodataform.addEventListener('submit', function (event) {
+
+        let vname = validateName();
+        let vnik = validatenik();
+        let valamat = validateAlamat();
+        let vhp = validateNoHp();
+
+        if (vname && vnik && valamat && vhp) {
+            work();
+        }
+        event.preventDefault();
+    });
+</script>
+
+</html>
