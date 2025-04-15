@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    header {
+      background-color: #2e8b57;
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .product-detail img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .product-detail h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .product-detail p {
+      margin: 6px 0;
+      font-size: 16px;
+    }
+
+    .ulasan h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      margin-top: 5px;
+    }
+
+    .button-container {
+      text-align: right;
+    }
+
+    .btn-beli {
+      background-color: #2e8b57;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .btn-beli:hover {
+      background-color: #256d48;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+
+      .product-detail h2 {
+        font-size: 20px;
+      }
+
+      .button-container {
+        text-align: center;
+      }
+    }
+
+    .ulasan ul {
+    list-style: none;
+    padding-left: 10px;
+    }
+
+    .ulasan li {
+    margin-bottom: 16px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-left: 5px;
+    margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Detail Produk</h1>
+  </header>
+
+  <div class="container">
+    <div class="product-detail">
+        <img src="padi.JPEG" alt="Padi" />
+      <h2>Padi</h2>
+      <p><strong>Kategori:</strong> Pangan</p>
+      <p><strong>Harga:</strong> Rp30.000 /kg</p>
+      <p><strong>Deskripsi:</strong> Padi berkualitas dari petani lokal, cocok untuk konsumsi rumah tangga dan bisnis.</p>
+    </div>
+
+    <div class="button-container">
+        <a href="checkout.html" class="btn-beli">🛒 Beli Sekarang</a>
+    </div>
+
+    </div><div class="ulasan">
+        <h3>Ulasan Pembeli</h3>
+        <ul>
+            <li> 
+                <strong>@r***a</strong><br />
+                ⭐️⭐️⭐️⭐️⭐️ <br />
+                <em>Bagus dan segar!</em>
+            </li>
+            <li>
+                <strong>@bilrznh</strong><br />
+                ⭐️⭐️⭐️⭐️ <br />
+                <em>Pengemasan rapi, pengiriman cepat.</em>
+            </li>
+            <li>
+                <strong>@D**i27</strong><br />
+                ⭐️⭐️⭐️⭐️⭐️ <br />
+                <em>Kualitas mantap, recommended!</em>
+            </li>
+        </ul>
+    </div>
+
+  </div>
+</body>
+</html>
