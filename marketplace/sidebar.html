@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Desmart Katalog</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .sidebar {
+      width: 280px;
+      background-color: #fff;
+      border-right: 1px solid #ddd;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .tab {
+      background-color: #eee;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      flex: 1;
+      margin-right: 5px;
+    }
+
+    .tab:last-child {
+      margin-right: 0;
+    }
+
+    .tab.active {
+      background-color: #0f9d58;
+      color: white;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #0f9d58;
+      color: white;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .cart-content p {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* Ikon Sosmed */
+    .social-icons {
+      position: fixed;
+      top: 50%;
+      left: 300px; /* setelah sidebar */
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 10px;
+    }
+
+    .social-icons a {
+      color: #333;
+      font-size: 22px;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: #8d3cff;
+    }
+
+    .main-content {
+      margin-left: 350px;
+      padding: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="tabs">
+      <button class="tab active">Active Cart</button>
+      <button class="tab">Your Carts</button>
+    </div>
+
+    <div class="cart-content">
+      <p><strong>Have an account?</strong></p>
+      <button class="login-btn">Login or Create account</button>
+      <p>You do not have any active carts.</p>
+    </div>
+  </div>
+
+  <div class="social-icons">
+    <a href="#"><i class="fab fa-twitch"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
+    <a href="#"><i class="fab fa-tiktok"></i></a>
+  </div>
+
+  <div class="main-content">
+    <h1>Selamat datang di Desmart!</h1>
+    <p>Ini halaman katalog produk. Silakan pilih produk dari daftar di bawah.</p>
+  </div>
+
+</body>
+</html>
