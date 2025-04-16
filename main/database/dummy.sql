@@ -1,32 +1,47 @@
--- Insert dummy data into Users table
-INSERT INTO Users (name, email, password, role)
-VALUES
-  ('John Doe', 'johndoe@example.com', 'password123', 'pembeli'),
-  ('Jane Doe', 'janedoe@example.com', 'password456', 'penjual'),
-  ('Bob Smith', 'bobsmith@example.com', 'password789', 'admin'),
-  ('Rina Wijaya', 'rinawijaya@example.com', 'password101', 'penjual'),
-  ('Tono Sutanto', 'tonosutanto@example.com', 'password202', 'pembeli');
+-- Data Dummy
+-- Users
+INSERT INTO Users (name, email, password, role) VALUES
+('Andi Petani', 'andi@desa.com', 'password123', 'seller'),
+('Budi Pembeli', 'budi@kota.com', 'password123', 'customer'),
+('Citra Peternak', 'citra@desa.com', 'password123', 'seller');
 
--- Insert dummy data into Produk table
-INSERT INTO Produk (user_id, nama_produk, kategori, harga, stok, deskripsi, foto_url, lokasi)
-VALUES
-  (2, 'Beras Cianjur', 'Hasil Tani', 12000.00, 100, 'Beras putih kualitas premium', 'https://example.com/beras.jpg', 'Cianjur'),
-  (4, 'Telur Ayam Kampung', 'Hasil Ternak', 18000.00, 50, 'Telur ayam kampung segar', 'https://example.com/telur.jpg', 'Sleman'),
-  (2, 'Jagung Manis', 'Hasil Tani', 8000.00, 75, 'Jagung manis siap masak', 'https://example.com/jagung.jpg', 'Cianjur'),
-  (5, 'Susu Sapi Murni', 'Hasil Ternak', 25000.00, 30, 'Susu sapi murni tanpa pengawet', 'https://example.com/susu.jpg', 'Lembang'),
-  (4, 'Sayur Bayam', 'Hasil Tani', 4000.00, 60, 'Bayam segar dari kebun sendiri', 'https://example.com/bayam.jpg', 'Sleman'),
-  (3, 'Nasi Merah Organik', 'Pangan', 16000.00, 40, 'Nasi merah sehat dan alami', 'https://example.com/nasi-merah.jpg', 'Magelang'),
-  (1, 'Tomat Segar', 'Sayur & Buah', 6000.00, 80, 'Tomat merah segar siap konsumsi', 'https://example.com/tomat.jpg', 'Bandung'),
-  (2, 'Alpukat Mentega', 'Sayur & Buah', 25000.00, 50, 'Alpukat mentega dari kebun lokal', 'https://example.com/alpukat.jpg', 'Garut'),
-  (4, 'Bibit Kelapa Sawit', 'Perkebunan', 35000.00, 25, 'Bibit unggul kelapa sawit', 'https://example.com/kelapa-sawit.jpg', 'Riau'),
-  (5, 'Pupuk Organik Granul', 'Perkebunan', 20000.00, 60, 'Pupuk organik untuk tanaman keras', 'https://example.com/pupuk.jpg', 'Kudus'),
-  (2, 'Minyak Kelapa Murni', 'Industri', 30000.00, 40, 'Minyak kelapa hasil olahan mandiri', 'https://example.com/minyak.jpg', 'Bali'),
-  (3, 'Keripik Pisang', 'Industri', 12000.00, 100, 'Keripik pisang manis renyah', 'https://example.com/keripik.jpg', 'Yogyakarta'),
-  (4, 'Sapi Bali Betina', 'Ternak Besar', 8500000.00, 5, 'Sapi bali sehat umur 2 tahun', 'https://example.com/sapi.jpg', 'Denpasar'),
-  (1, 'Kambing Etawa', 'Ternak Kecil', 2500000.00, 10, 'Kambing Etawa siap ternak', 'https://example.com/kambing.jpg', 'Malang'),
-  (3, 'Bebek Peking', 'Unggas', 70000.00, 40, 'Bebek Peking untuk konsumsi', 'https://example.com/bebek.jpg', 'Brebes'),
-  (5, 'Ayam Petelur', 'Unggas', 60000.00, 60, 'Ayam petelur siap produksi', 'https://example.com/ayam-petelur.jpg', 'Purwokerto'),
-  (4, 'Domba Garut', 'Ternak Kecil', 1800000.00, 8, 'Domba garut jantan siap jual', 'https://example.com/domba.jpg', 'Garut'),
-  (2, 'Jagung Pipilan Kering', 'Pangan', 7000.00, 150, 'Jagung kering siap giling', 'https://example.com/jagung-pipil.jpg', 'Madura'),
-  (1, 'Salak Pondoh', 'Sayur & Buah', 12000.00, 100, 'Salak pondoh manis dari Sleman', 'https://example.com/salak.jpg', 'Sleman'),
-  (3, 'Minyak Nilam', 'Industri', 75000.00, 20, 'Minyak atsiri dari nilam asli', 'https://example.com/nilam.jpg', 'Aceh');
+-- Profil Usaha
+INSERT INTO Profil_Usaha (user_id, nama_usaha, deskripsi, kontak, alamat) VALUES
+(1, 'Usaha Tani Subur', 'Menjual hasil pertanian segar dari desa.', '08123456789', 'Desa Sukamaju'),
+(3, 'Peternakan Sapi Maju', 'Hasil ternak lokal berkualitas.', '08987654321', 'Desa Kertajaya');
+
+-- Setor Hasil
+INSERT INTO Setor_Hasil (profil_usaha_id, nama_komoditas, jumlah, satuan, keterangan) VALUES
+(1, 'Beras Cianjur', 500, 'kg', 'Beras hasil panen Oktober'),
+(1, 'Jagung', 300, 'kg', 'Jagung manis segar'),
+(2, 'Sapi Potong', 10, 'ekor', 'Siap potong'),
+(2, 'Susu Sapi Segar', 200, 'liter', 'Diperah pagi hari');
+
+-- Produk (25 jenis, variasi dari hasil pertanian dan peternakan)
+INSERT INTO Produk (profil_usaha_id, setor_id, nama_produk, kategori, harga, stok, deskripsi, foto_url, lokasi) VALUES
+(1, 1, 'Beras Organik 1kg', 'Pangan', 12000, 100, 'Beras putih organik dari Cianjur', '', 'Cianjur'),
+(1, 1, 'Beras Merah 1kg', 'Pangan', 15000, 50, 'Beras merah sehat dan alami', '', 'Cianjur'),
+(1, 2, 'Jagung Manis 500g', 'Sayur & Buah', 8000, 60, 'Jagung segar langsung dari ladang', '', 'Cianjur'),
+(1, 2, 'Jagung Pipil Kering 1kg', 'Industri', 10000, 40, 'Untuk bahan pakan atau industri', '', 'Cianjur'),
+(2, 3, 'Daging Sapi Segar 1kg', 'Ternak Besar', 120000, 20, 'Potongan daging sapi segar', '', 'Kertajaya'),
+(2, 3, 'Iga Sapi 1kg', 'Ternak Besar', 140000, 10, 'Iga sapi premium', '', 'Kertajaya'),
+(2, 4, 'Susu Sapi Botol 1L', 'Ternak Besar', 20000, 50, 'Susu sapi segar botolan', '', 'Kertajaya'),
+(2, 4, 'Susu Pasteurisasi 1L', 'Ternak Besar', 25000, 30, 'Susu sapi dipasteurisasi', '', 'Kertajaya'),
+(1, NULL, 'Tomat Merah 1kg', 'Sayur & Buah', 10000, 100, 'Tomat segar dari ladang', '', 'Sukamaju'),
+(1, NULL, 'Wortel Organik 1kg', 'Sayur & Buah', 9000, 80, 'Wortel sehat bebas pestisida', '', 'Sukamaju'),
+(1, NULL, 'Bayam Hijau 1 ikat', 'Sayur & Buah', 5000, 70, 'Bayam segar dan hijau', '', 'Sukamaju'),
+(1, NULL, 'Cabai Merah Keriting 1kg', 'Sayur & Buah', 30000, 25, 'Cabai pedas segar', '', 'Sukamaju'),
+(1, NULL, 'Kacang Panjang 1 ikat', 'Sayur & Buah', 4000, 40, 'Kacang panjang muda', '', 'Sukamaju'),
+(1, NULL, 'Terong Ungu 1kg', 'Sayur & Buah', 8000, 30, 'Terong segar', '', 'Sukamaju'),
+(2, NULL, 'Ayam Kampung 1 ekor', 'Unggas', 50000, 15, 'Ayam kampung siap masak', '', 'Kertajaya'),
+(2, NULL, 'Telur Ayam 1 lusin', 'Unggas', 27000, 40, 'Telur ayam kampung segar', '', 'Kertajaya'),
+(2, NULL, 'Daging Kambing 1kg', 'Ternak Kecil', 110000, 15, 'Daging kambing segar', '', 'Kertajaya'),
+(2, NULL, 'Kambing Potong 1 ekor', 'Ternak Kecil', 1800000, 3, 'Kambing sehat siap potong', '', 'Kertajaya'),
+(2, NULL, 'Daging Ayam 1kg', 'Unggas', 35000, 25, 'Potongan ayam kampung', '', 'Kertajaya'),
+(1, NULL, 'Madu Hutan 250ml', 'Industri', 45000, 10, 'Madu asli dari hutan', '', 'Sukamaju'),
+(1, NULL, 'Minyak Kelapa 1L', 'Industri', 35000, 20, 'Minyak kelapa alami', '', 'Sukamaju'),
+(1, NULL, 'Kopi Arabika 200g', 'Perkebunan', 30000, 30, 'Kopi biji arabika panggang', '', 'Sukamaju'),
+(1, NULL, 'Teh Hijau Kering 100g', 'Perkebunan', 15000, 25, 'Teh hijau dari perkebunan lokal', '', 'Sukamaju'),
+(1, NULL, 'Bawang Merah 1kg', 'Sayur & Buah', 20000, 45, 'Bawang merah lokal', '', 'Sukamaju'),
+(1, NULL, 'Ubi Cilembu 1kg', 'Pangan', 12000, 50, 'Ubi manis dari Cilembu', '', 'Sukamaju');
+

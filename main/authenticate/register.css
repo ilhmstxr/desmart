@@ -41,12 +41,18 @@ body {
 
 .emailUser,
 .password,
-.confirm-password {
+.confirm-password,
+.namaUsaha,
+.Kontak,
+.alamat {
   padding: 10px;
 }
 
 #emailUser,
-#password {
+#password,
+  #namaUsaha,
+#kontak,
+#alamat {
   border-radius: 10px;
 }
 
