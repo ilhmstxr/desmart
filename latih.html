@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="latih.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 class="text-4xl font-bold underline italic">Hello World!</h1>
+
+    <button class="bg-blue "></button>
+    <form action="" onsubmit="cekNama()">
+        <input type="text" name="nama" id="nama">
+        <input type="submit" value="Simpan">
+        <label id="btn">yo</label>
+    </form>
+    <script>
+        function cekNama() {
+            var inputan = document.getElementById("nama").value;
+            console.log(inputan);
+
+            alert("Selamat Datang " + inputan);
+            // if (nama === "") {
+            //     alert("Nama Tidak Boleh Kosong");
+            // }else {
+            //     alert("Selamat Datang " + nama);
+            // }
+        }
+
+        document.getElementById("btn").addEventListener("click", function () {
+            console.log("akucrut");
+        })
+
+    </script>
+</body>
+
+</html>

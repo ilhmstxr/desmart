@@ -24,7 +24,7 @@ body {
   padding: 0.5em 0.5em 0.5em 1em;
 }
 
-.cardLogin {
+.cardRegister {
   width: 400px;
   padding: 10px;
   text-align: center;
@@ -35,24 +35,21 @@ body {
   border: black solid;
 }
 
-.formLogin {
+.formRegister {
   justify-content: center;
 }
 
-.username,
-.password {
+.emailUser,
+.password,
+.confirm-password {
   padding: 10px;
 }
 
-#username,
+#emailUser,
 #password {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* margin-bottom: 10px; */
   border-radius: 10px;
 }
 
-#login,
 #register {
   display: inline-block;
 }
