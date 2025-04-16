@@ -76,6 +76,11 @@ nav ul li:hover {
     background: #4CAF50;
 }
 
+nav ul li.active {
+    background-color: #4CAF50; /* Warna hijau highlight */
+}
+
+
 main {
     flex-grow: 1;
     padding: 20px;
