@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard Desmart</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -20,22 +20,22 @@
         <div class="content-wrapper">
             <nav>
                 <ul>
-                    <li><a href="01_Dashboard.html">Dashboard</a></li>
+                    <li><a href="01_Dashboard.php">Dashboard</a></li>
 
                     <li><a href="02_manajemenProduk.php">Manajemen Produk</a></li>
-                    <li><a href="03_setorHasilUsaha.html">Setor Hasil Usaha</a></li>
-                    <li><a href="04_katalogProduk.html">Lihat Katalog Produk</a></li>
-                    <li><a href="05_pesanan.html">Pesanan</a></li>
-                    <li class="active"><a href="#">Riwayat Penjualan</a></li>
-                    <li><a href="07_pengaturan.html">Pengaturan</a></li>
-                    <li><a href="08_laporanAnalitik.html">Laporan & Analitik</a></li>
+                    <li><a href="03_setorHasilUsaha.php">Setor Hasil Usaha</a></li>
+                    <li><a href="04_katalogProduk.php">Lihat Katalog Produk</a></li>
+                    <li><a href="05_pesanan.php">Pesanan</a></li>
+                    <li><a href="06_riwayatPenjualan.php">Riwayat Penjualan</a></li>
+                    <li class="active"><a href="#">Pengaturan</a></li>
+                    <li><a href="08_laporanAnalitik.php">Laporan & Analitik</a></li>
                     <li><a href="#">Keluar</a></li>
                 </ul>
             </nav>
             <!-- dashboard -->
             <main>
                 <section class="overview">
-                    <h2> Riwayat Penjualan</h2>
+                    <h2>Pengaturan</h2>
                     <div class="stats">
                         <div class="stat">
                             <h3>Total Luas Tanah</h3>

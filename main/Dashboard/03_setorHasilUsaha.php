@@ -20,21 +20,22 @@
         <div class="content-wrapper">
             <nav>
                 <ul>
-                    <li><a href="01_Dashboard.html">Dashboard</a></li>
+                    <li><a href="01_Dashboard.php">Dashboard</a></li>
                     <li><a href="02_manajemenProduk.php">Manajemen Produk</a></li>
-                    <li><a href="03_setorHasilUsaha.html">Setor Hasil Usaha</a></li>
-                    <li class="active"><a href="#">Lihat Katalog Produk</a></li>
-                    <li><a href="05_pesanan.html">Pesanan</a></li>
-                    <li><a href="06_riwayatPenjualan.html">Riwayat Penjualan</a></li>
-                    <li><a href="07_pengaturan.html">Pengaturan</a></li>
-                    <li><a href="08_laporanAnalitik.html">Laporan & Analitik</a></li>
+                    <li class="active"><a href="#">Setor Hasil Usaha</a></li>
+                    <li><a href="04_katalogProduk.php">Lihat Katalog Produk</a></li>
+                    <li><a href="05_pesanan.php">Pesanan</a></li>
+                    <li><a href="06_riwayatPenjualan.php">Riwayat Penjualan</a></li>
+                    <li><a href="07_pengaturan.php">Pengaturan</a></li>
+                    <li><a href="08_laporanAnalitik.php">Laporan & Analitik</a></li>
                     <li><a href="#">Keluar</a></li>
+
                 </ul>
             </nav>
             <!-- dashboard -->
             <main>
                 <section class="overview">
-                    <h2> Katalog Produk</h2>
+                    <h2>Setor Hasil Usaha</h2>
                     <div class="stats">
                         <div class="stat">
                             <h3>Total Luas Tanah</h3>
@@ -48,7 +49,7 @@
                 </section>
 
                 <section class="task-management">
-                    <h2>Manajemen Tugas</h2>
+                    <h2>Setor Hasil Usaha</h2>
                     <table>
                         <tr>
                             <th>Tugas</th>
