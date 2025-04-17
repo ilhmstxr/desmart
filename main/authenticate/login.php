@@ -16,8 +16,16 @@ if (isset($_POST['login'])) {
 
         // jika password tidak di-hash, langsung bandingkan:
         if ($password === $user['password']) {
-            $_SESSION['userId'] = $user['id']; // GUNAKAN nama kolom sebenarnya
-            header("Location: ../Dashboard/01_Dashboard.html");
+            $_SESSION['userId'] = $user['id'];
+            $_SESSION['role'] = $user['role'];
+
+            if ($user['role'] === 'seller') {
+                header("Location: ../Dashboard/01_Dashboard.html");
+            } else if ($user['role'] === 'petani') {
+                header("Location: ../Dashboard/petani_dashboard.php");
+            } else {
+                header("Location: ../Dashboard/customer_dashboard.php");
+            }
         } else {
             echo "<script>alert('Email atau password salah!'); window.location.href='login.html';</script>";
         }
