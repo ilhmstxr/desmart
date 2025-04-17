@@ -64,7 +64,7 @@ CREATE TABLE Transaksi (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL, -- pembeli
   total DECIMAL(12,2) NOT NULL,
-  status VARCHAR(10) DEFAULT 'menunggu_pembayaran', -- ENUM'menunggu_pembayaran', 'diproses', 'dikirim', 'selesai', 'dibatalkan'
+  status VARCHAR(30) DEFAULT 'menunggu_pembayaran', -- ENUM'menunggu_pembayaran', 'diproses', 'dikirim', 'selesai', 'dibatalkan'
   metode_pembayaran VARCHAR(50),
   tanggal_transaksi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   alamat_pengiriman TEXT,
