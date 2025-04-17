@@ -20,9 +20,9 @@ if (isset($_POST['login'])) {
             $_SESSION['role'] = $user['role'];
 
             if ($user['role'] === 'seller') {
-                header("Location: ../Dashboard/01_Dashboard.html");
-            } else if ($user['role'] === 'petani') {
-                header("Location: ../Dashboard/petani_dashboard.php");
+                header("Location: ../Dashboard/01_Dashboard.php");
+            } else if ($user['role'] === 'customer') {
+                header("Location: ../Dashboard/homepage.html");
             } else {
                 header("Location: ../Dashboard/customer_dashboard.php");
             }
