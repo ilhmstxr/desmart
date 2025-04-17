@@ -4,7 +4,7 @@ session_start();
 
 // Pastikan user sudah login
 if (!isset($_SESSION['userId'])) {
-    echo "<script>alert('Silakan login terlebih dahulu'); window.location.href='../authenticate/login.php'';</script>";
+    echo "<script>alert('Silakan login terlebih dahulu'); window.location.href='../authenticate/login.html';</script>";
     exit();
 }
 
@@ -14,19 +14,20 @@ $userId = $_SESSION['userId'];
 $queryUsaha = "SELECT id FROM profil_usaha WHERE user_id = $userId";
 $resultUsaha = mysqli_query($koneksi, $queryUsaha);
 
-$setorList = [];
+$produkList = [];
+$profilUsahaId = 0;
 
 if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
     $dataUsaha = mysqli_fetch_assoc($resultUsaha);
     $profilUsahaId = $dataUsaha['id'];
 
-    // Ambil semua data setor hasil berdasarkan profil usaha
-    $querySetor = "SELECT * FROM Setor_Hasil WHERE profil_usaha_id = $profilUsahaId ORDER BY tanggal_setor DESC";
-    $resultSetor = mysqli_query($koneksi, $querySetor);
+    // Ambil data dari tabel Produk
+    $queryProduk = "SELECT * FROM Produk WHERE profil_usaha_id = $profilUsahaId ORDER BY created_at DESC";
+    $resultProduk = mysqli_query($koneksi, $queryProduk);
 
-    if ($resultSetor) {
-        while ($row = mysqli_fetch_assoc($resultSetor)) {
-            $setorList[] = $row;
+    if ($resultProduk) {
+        while ($row = mysqli_fetch_assoc($resultProduk)) {
+            $produkList[] = $row;
         }
     }
 }
@@ -38,7 +39,7 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Desmart</title>
+    <title>Manajemen Produk - Desmart</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -49,66 +50,73 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
             <input type="text" placeholder="Search...">
         </header>
         <div class="welcome-message">
-            <h1>Selamat Datang di Desmart!</h1>
+            <h1>Manajemen Produk</h1>
         </div>
         <div class="content-wrapper">
             <nav>
                 <ul>
-                    <li><a href="01_Dashboard.php">Dashboard</a></li>
-                    <li><a href="03_setorHasilUsaha.php">Manajemen Produk</a></li>
-                    <li class="active"><a href="#">Setor Hasil Usaha</a></li>
-                    <li><a href="04_katalogProduk.php">Lihat Katalog Produk</a></li>
-                    <li><a href="05_pesanan.php">Pesanan</a></li>
-                    <li><a href="06_riwayatPenjualan.php">Riwayat Penjualan</a></li>
-                    <li><a href="07_pengaturan.php">Pengaturan</a></li>
-                    <li><a href="08_laporanAnalitik.php">Laporan & Analitik</a></li>
+                    <li><a href="01_Dashboard.html">Dashboard</a></li>
+                    <li class="active"><a href="#">Manajemen Produk</a></li>
+                    <li><a href="03_setorHasilUsaha.php">Setor Hasil Usaha</a></li>
+                    <li><a href="04_katalogProduk.html">Lihat Katalog Produk</a></li>
+                    <li><a href="05_pesanan.html">Pesanan</a></li>
+                    <li><a href="06_riwayatPenjualan.html">Riwayat Penjualan</a></li>
+                    <li><a href="07_pengaturan.html">Pengaturan</a></li>
+                    <li><a href="08_laporanAnalitik.html">Laporan & Analitik</a></li>
                     <li><a href="../authenticate/logout.php">Keluar</a></li>
                 </ul>
             </nav>
-            <!-- dashboard -->
+
             <main>
                 <section class="overview">
-                    <h2>Setor Hasil Usaha</h2>
+                    <h2>Data Produk</h2>
                     <div class="stats">
                         <div class="stat">
-                            <h3>Total Komoditas</h3>
-                            <p><?= count($setorList) ?> data</p>
+                            <h3>Total Produk</h3>
+                            <p><?= count($produkList) ?> data</p>
                         </div>
                         <div class="stat">
-                            <h3>Revenue</h3>
-                            <p>Rp50,000</p> <!-- Placeholder -->
+                            <h3>Total Stok</h3>
+                            <p>
+                                <?php
+                                $totalStok = array_sum(array_column($produkList, 'stok'));
+                                echo $totalStok;
+                                ?> unit
+                            </p>
                         </div>
                     </div>
                 </section>
 
                 <section class="task-management">
-                    <h2>Data Setoran Komoditas</h2>
+                    <h2>Daftar Produk</h2>
                     <table>
                         <tr>
                             <th>No.</th>
-                            <th>Nama Komoditas</th>
-                            <th>Jumlah</th>
-                            <th>Satuan</th>
-                            <th>Tanggal</th>
-                            <th>Keterangan</th>
+                            <th>Nama Produk</th>
+                            <th>Kategori</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                            <th>Lokasi</th>
+                            <th>Tanggal Dibuat</th>
                         </tr>
-                        <?php if (count($setorList) > 0): ?>
+                        <?php if (count($produkList) > 0): ?>
                             <?php
                             $n = 1;
-                            foreach ($setorList as $setor):
+                            foreach ($produkList as $produk):
                             ?>
                                 <tr>
                                     <td><?= $n++ ?></td>
-                                    <td><?= htmlspecialchars($setor['nama_komoditas']) ?></td>
-                                    <td><?= $setor['jumlah'] ?></td>
-                                    <td><?= htmlspecialchars($setor['satuan']) ?></td>
-                                    <td><?= date('d-m-Y', strtotime($setor['tanggal_setor'])) ?></td>
-                                    <td><?= htmlspecialchars($setor['keterangan']) ?></td>
+                                    <td><?= htmlspecialchars($produk['nama_produk']) ?></td>
+                                    <td><?= htmlspecialchars($produk['kategori']) ?></td>
+                                    <td>Rp<?= number_format($produk['harga'], 0, ',', '.') ?></td>
+                                    <td><?= $produk['stok'] ?></td>
+                                    <td><?= htmlspecialchars($produk['lokasi']) ?></td>
+                                    <td><?= date('d-m-Y H:i', strtotime($produk['created_at'])) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6">Belum ada hasil yang disetor.</td>
+                                <td colspan="7">Belum ada produk yang tersedia.</td>
                             </tr>
                         <?php endif; ?>
                     </table>
