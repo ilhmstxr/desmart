@@ -16,8 +16,8 @@ if (isset($_POST['register'])) {
     }
 
     // cek email 
-    $query = "SELECT * FROM user WHERE email = '$email'";
-    $queryIDterakhir = "SELECT MAX(user_id) AS last_id FROM user";
+    $query = "SELECT * FROM users WHERE email = '$email'";
+    $queryIDterakhir = "SELECT MAX(user_id) AS last_id FROM users";
     $resultID = mysqli_query($koneksi, $queryIDterakhir);
     $result = mysqli_query($koneksi, $query);
 
@@ -29,7 +29,7 @@ if (isset($_POST['register'])) {
 
         $id_sebelumnya = mysqli_fetch_assoc($resultID);
         $uid = ++$id_sebelumnya['last_id'];
-        $query = "INSERT INTO user (user_id,email, password,role) VALUES ($uid,'$email', '$password','user')";
+        $query = "INSERT INTO users (user_id,email, password,role) VALUES ($uid,'$email', '$password','user')";
         if (mysqli_query($koneksi, $query)) {
             echo "<script>alert('Registrasi berhasil! Silakan login.'); window.location.href='../authenticate/login.html';</script>";
         } else {

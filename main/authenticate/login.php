@@ -15,14 +15,16 @@ if (isset($_POST['login'])) {
         $user = mysqli_fetch_assoc($result);
 
         // jika password tidak di-hash, langsung bandingkan:
-        if ($password === $user['password']) {
+        // if ($password = $user['password']) {
+        //     $_SESSION['id'] = $user['id'];
+         if ($password === $user['password']) {
             $_SESSION['userId'] = $user['id'];
             $_SESSION['role'] = $user['role'];
 
             if ($user['role'] === 'seller') {
                 header("Location: ../Dashboard/01_Dashboard.php");
             } else if ($user['role'] === 'customer') {
-                header("Location: ../Dashboard/homepage.html");
+                header("Location: ../homepage/Homepage.html");
             } else {
                 header("Location: ../Dashboard/customer_dashboard.php");
             }

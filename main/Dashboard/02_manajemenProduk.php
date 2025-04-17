@@ -21,7 +21,6 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
     $dataUsaha = mysqli_fetch_assoc($resultUsaha);
     $profilUsahaId = $dataUsaha['id'];
 
-    // Ambil data dari tabel Produk
     $queryProduk = "SELECT * FROM Produk WHERE profil_usaha_id = $profilUsahaId ORDER BY created_at ASC";
     $resultProduk = mysqli_query($koneksi, $queryProduk);
 
@@ -132,7 +131,7 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
             </nav>
 
             <main>
-            <div class="form-container">
+                <div class="form-container">
                     <h2>Form Tambah Produk</h2>
                     <form id="produkForm" action="02_simpanProduk.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="profil_usaha_id" value="<?= $profilUsahaId ?>">
@@ -202,6 +201,7 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
                             <th>Stok</th>
                             <th>Lokasi</th>
                             <th>Tanggal Dibuat</th>
+                            <th>Action</th>
                         </tr>
                         <?php if (count($produkList) > 0): ?>
                             <?php
@@ -216,6 +216,20 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
                                     <td><?= $produk['stok'] ?></td>
                                     <td><?= htmlspecialchars($produk['lokasi']) ?></td>
                                     <td><?= date('d-m-Y H:i', strtotime($produk['created_at'])) ?></td>
+                                    <td>
+                                        <a href="#"
+                                            class="btn-edit"
+                                            data-id="<?= $produk['id'] ?>"
+                                            data-nama="<?= htmlspecialchars($produk['nama_produk'], ENT_QUOTES) ?>"
+                                            data-kategori="<?= htmlspecialchars($produk['kategori'], ENT_QUOTES) ?>"
+                                            data-harga="<?= $produk['harga'] ?>"
+                                            data-stok="<?= $produk['stok'] ?>"
+                                            data-deskripsi="<?= htmlspecialchars($produk['deskripsi'], ENT_QUOTES) ?>"
+                                            data-lokasi="<?= htmlspecialchars($produk['lokasi'], ENT_QUOTES) ?>"
+                                            data-setor="<?= $produk['setor_id'] ?>"> Edit </a>
+                                        <a href="02_hapusProduk.php?id=<?= $produk['id'] ?>" onclick="return confirm('Yakin ingin menghapus produk ini?')" class="btn-delete">Hapus</a>
+                                    </td>
+
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -241,6 +255,41 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
                 errorMessage.style.display = "none";
             }
         }
+
+        document.querySelectorAll('.btn-edit').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault(); // supaya tidak reload halaman
+
+                // Ambil semua data dari atribut data-*
+                const id = this.dataset.id;
+                const nama = this.dataset.nama;
+                const kategori = this.dataset.kategori;
+                const harga = this.dataset.harga;
+                const stok = this.dataset.stok;
+                const deskripsi = this.dataset.deskripsi;
+                const lokasi = this.dataset.lokasi;
+                const setorId = this.dataset.setor;
+
+                // Isi form
+                document.getElementById('produkForm').action = '02_simpanProduk.php';
+                document.getElementById('produkForm').insertAdjacentHTML('beforeend',
+                    `<input type="hidden" name="id" value="${id}" id="id_produk_edit">`
+                );
+                document.getElementById('nama_produk').value = nama;
+                document.getElementById('kategori').value = kategori;
+                document.getElementById('harga').value = harga;
+                document.getElementById('stok').value = stok;
+                document.getElementById('deskripsi').value = deskripsi;
+                document.getElementById('lokasi').value = lokasi;
+                document.getElementById('setor_id').value = setorId;
+
+                // Scroll ke form
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
 </body>
 

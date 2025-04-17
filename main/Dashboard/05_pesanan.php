@@ -115,7 +115,7 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
                                     <td>Rp<?= number_format($pesanan['total'], 0, ',', '.') ?></td>
                                     <td><?= htmlspecialchars($pesanan['status']) ?></td>
                                     <td><?= htmlspecialchars($pesanan['metode_pembayaran']) ?></td>
-                                    <td><?= date('d-m-Y H:i', strtotime($pesanan['tanggal_pesan'])) ?></td>
+                                    <td><?= date('d-m-Y H:i', strtotime($pesanan['tanggal_transaksi'])) ?></td>
                                     <td><?= htmlspecialchars($pesanan['alamat_pengiriman']) ?></td>
                                     <td><?= htmlspecialchars($pesanan['catatan']) ?></td>
                                 </tr>
