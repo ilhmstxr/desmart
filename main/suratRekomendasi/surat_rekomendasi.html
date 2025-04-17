@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pengisian Biodata | Desmart</title>
+    <link rel="stylesheet" href="surat_rekomendasi.css" />
+</head>
+
+<body>
+    <div class="container-biodata">
+        <form id="biodataForm" action="#" method="post">
+            <h1>Form Pengisian Biodata</h1>
+
+            <label for="nama">Nama Lengkap:</label>
+            <input type="text" id="nama" name="nama"><br>
+
+            <label for="profesi">Profesi:</label>
+            <select id="Profesi" name="profesi">
+                <option>Petani</option>
+                <option>Peternak</option>
+            </select><br>
+
+            <label for="nik">NIK:</label>
+            <input type="number" id="nik" name="nik"><br>
+
+            <label for="Alamat">Alamat:</label>
+            <input type="text" id="alamat" name="alamat"><br>
+
+            <label for="jenis kelamin">Jenis Kelamin:</label>
+            <select id="jenis kelamin" name="jenis kelamin">
+                <option>Laki-Laki</option>
+                <option>Perempuan</option>
+            </select><br>
+
+            <label for="noHp">No. Hp:</label>
+            <input type="text" id="noHp" name="noHp"><br>
+
+            <input type="submit" value="Simpan">
+        </form>
+    </div>
+</body>
+<script>
+    let nama = document.getElementById('nama');
+    let biodataform = document.getElementById('biodataForm');
+    let nik = document.getElementById('nik');
+    let noHp = document.getElementById('noHp');
+    const regex = /^[a-zA-Z '.]+$/;
+    console.log("regex: " + regex);
+    
+
+    biodataform.addEventListener('submit', function (event) {
+
+        let vname = validateName();
+        let vnik = validatenik();
+        let valamat = validateAlamat();
+        let vhp = validateNoHp();
+
+        if (vname && vnik && valamat && vhp) {
+            work();
+        }
+        event.preventDefault();
+    });
+
+    // pembatasan nama lengkap
+    function validateName() {
+        if (!regex.test(nama.value)) {
+            alert("nama anomali");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // mentok nomor nik
+    function validatenik() {
+        if (nik.value.length != 16) {
+            // return false;
+            alert("nik nguaor");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    // pembatasan alamat
+    function validateAlamat() {
+        if (!regex.test(alamat.value)) {
+            // return false;
+            alert("alamatnguaor");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // pembatasan no hp
+    function validateNoHp() {
+        if (noHp.value.length < 10) {
+            alert("nomor hp kurang");
+            return false;
+        } else if (noHp.value.length > 14) {
+            alert("nomor hp lebih");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // alert jika berhasil
+    function work() {
+        alert("berhasil");
+    }
+</script>
+
+</html>

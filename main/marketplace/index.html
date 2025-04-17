@@ -1,0 +1,175 @@
+  <!DOCTYPE html>
+  <html lang="id">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DESMART</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="marketplace.css" />  
+  </head>
+
+  <body>
+    <header>
+      <h1>DESMART</h1>
+    </header>
+
+    <div class="main-container">
+      <aside>
+        <h3>Filter Kategori</h3>
+        <div id="category-filters">
+          <label><input type="checkbox" value="pangan" onchange="filterProducts()"> Pangan</label><br />
+          <label><input type="checkbox" value="sayurbuah" onchange="filterProducts()"> Sayur & Buah</label><br />
+          <label><input type="checkbox" value="perkebunan" onchange="filterProducts()"> Perkebunan</label><br />
+          <label><input type="checkbox" value="industri" onchange="filterProducts()"> Industri</label><br />
+          <label><input type="checkbox" value="ternakbesar" onchange="filterProducts()"> Ternak Besar</label><br />
+          <label><input type="checkbox" value="ternakkecil" onchange="filterProducts()"> Ternak Kecil</label><br />
+          <label><input type="checkbox" value="unggas" onchange="filterProducts()"> Unggas</label><br />
+        </div>
+        <h3 style="margin-top:1rem;">Urutkan Harga</h3>
+        <label><input type="radio" name="priceSort" value="" checked onchange="filterProducts()"> Semua</label><br />
+        <label><input type="radio" name="priceSort" value="low" onchange="filterProducts()"> Murah ke Mahal</label><br />
+        <label><input type="radio" name="priceSort" value="high" onchange="filterProducts()"> Mahal ke Murah</label>
+      </aside>
+
+      <div style="flex: 1;">
+        <section class="toolbar">
+          <input type="text" id="search" placeholder="Cari produk..." oninput="searchProducts()" />
+          <button onclick="viewCart()">🛒 Keranjang</button>
+        </section>
+
+        <main>
+          <h2 style="padding: 1rem;">Katalog Produk</h2>
+          <div id="product-list" class="product-grid"></div>
+
+          <section id="cart-section">
+            <form action="">
+              <h3>Keranjang Belanja</h3>
+              <ul id="cart-items"></ul>
+              <button type="submit"><i class="fa-solid fa-cart-plus"></i></button>
+            </form>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      // keranjang
+      const cart = [];
+
+    //  list produk
+      const allProducts = [
+        { name: "Padi", category: "pangan", price: 30000, image: "padi.jpeg" },
+        { name: "Jagung", category: "pangan", price: 25000, image: "jagung.jpeg" },
+        { name: "Gandum", category: "pangan", price: 40000, image: "gandum.jpg" },
+        { name: "Bayam", category: "sayurbuah", price: 5000, image: "bayam.jpeg" },
+        { name: "Kangkung", category: "sayurbuah", price: 4000, image: "kangkung.jpg" },
+        { name: "Sawi", category: "sayurbuah", price: 6000, image: "sawi.jpg" },
+        { name: "Wortel", category: "sayurbuah", price: 7000, image: "wortel.jpg" },
+        { name: "Tomat", category: "sayurbuah", price: 6500, image: "tomat.jpg" },
+        { name: "Cabai", category: "sayurbuah", price: 12000, image: "cabai.jpg" },
+        { name: "Jeruk", category: "sayurbuah", price: 10000, image: "jeruk.jpg" },
+        { name: "Apel", category: "sayurbuah", price: 15000, image: "apel.jpg" },
+        { name: "Stroberi", category: "sayurbuah", price: 20000, image: "stroberi.jpg" },
+        { name: "Anggur", category: "sayurbuah", price: 25000, image: "anggur.jpg" },
+        { name: "Pisang", category: "sayurbuah", price: 9000, image: "pisang.jpg" },
+        { name: "Kelapa Sawit", category: "perkebunan", price: 50000, image: "kelapasawit.jpg" },
+        { name: "Kopi", category: "perkebunan", price: 80000, image: "kopi.jpg" },
+        { name: "Karet", category: "perkebunan", price: 60000, image: "karet.jpg" },
+        { name: "Tebu", category: "perkebunan", price: 30000, image: "tebu.jpg" },
+        { name: "Coklat", category: "perkebunan", price: 70000, image: "coklat.jpg" },
+        { name: "Kapas", category: "industri", price: 45000, image: "kapas.jpg" },
+        { name: "Tembakau", category: "industri", price: 55000, image: "tembakau.jpg" },
+        { name: "Daging Sapi", category: "ternakbesar", price: 120000, image: "dagingsapi.jpg" },
+        { name: "Susu Sapi", category: "ternakbesar", price: 50000, image: "sususapi.jpg" },
+        { name: "Daging Kambing", category: "ternakkecil", price: 100000, image: "dagingkambing.jpg" },
+        { name: "Susu Kambing", category: "ternakkecil", price: 60000, image: "susukambing.jpg" },
+        { name: "Daging Domba", category: "ternakkecil", price: 110000, image: "dagingdomba.jpg" },
+        { name: "Telur", category: "unggas", price: 20000, image: "telur.jpg" },
+        { name: "Daging Ayam", category: "unggas", price: 45000, image: "dagingayam.jpg" },
+        { name: "Telur Asin", category: "unggas", price: 25000, image: "telurasin.jpg" }
+      ];
+
+
+    function saveCartToServer() {
+      fetch("save_cart.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: 1, // Ganti sesuai dengan user login
+          cart: cart
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log("Keranjang berhasil disimpan ke server.");
+        } else {
+          console.error("Gagal menyimpan keranjang.");
+        }
+      })
+      .catch(error => console.error("Error saat mengirim ke server:", error));
+    }
+
+      function addToCart(productName) {
+        cart.push(productName);
+        alert(`Ditambahkan ke keranjang: ${productName}`);
+        updateCart();
+      }
+
+      function updateCart() {
+        const cartList = document.getElementById("cart-items");
+        cartList.innerHTML = "";
+        cart.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          cartList.appendChild(li);
+        });
+      }
+
+      function displayProducts(products) {
+        const container = document.getElementById("product-list");
+        container.innerHTML = "";
+        products.forEach(p => {
+          container.innerHTML += `
+            <div class="product-card">
+              <img src="images/${p.image}" alt="${p.name}" />
+              <h3>${p.name}</h3>
+              <p>Rp${p.price.toLocaleString()} /kg</p>
+              <button onclick="addToCart('${p.name}')">+ Keranjang</button>
+            </div>`;
+        });
+      }
+
+      function filterProducts() {
+        const selectedCategories = Array.from(document.querySelectorAll('#category-filters input:checked')).map(cb => cb.value);
+        const priceSort = document.querySelector('input[name="priceSort"]:checked').value;
+
+        let filtered = allProducts.filter(p => selectedCategories.length === 0 || selectedCategories.includes(p.category));
+
+        if (priceSort === "low") filtered.sort((a, b) => a.price - b.price);
+        if (priceSort === "high") filtered.sort((a, b) => b.price - a.price);
+
+        const searchQuery = document.getElementById("search").value.toLowerCase();
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery));
+
+        displayProducts(filtered);
+      }
+
+      function searchProducts() {
+        filterProducts();
+      }
+
+      function viewCart() {
+        document.getElementById("cart-section").scrollIntoView({ behavior: "smooth" });
+      }
+
+      window.onload = () => {
+        displayProducts(allProducts);
+      }
+    </script>
+  </body>
+
+  </html>

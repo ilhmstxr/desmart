@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../authenticate/register.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+
+<body>
+    <div class="row">
+
+        <div class="kiri">
+            <img src="../image/cow.jpeg" alt="">
+        </div>
+        <div class="kanan">
+            <div class="cardRegister">
+                <form class="formRegister" method="post" action="register.php">
+                    <div class="emailUser">
+                        <label for="emailUser">email:</label>
+                        <input type="text" id="emailUser" name="emailUser" required>
+                    </div>
+                    <div class="password">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="confirm-password">
+                        <label for="confirm-password">confirm Password:</label>
+                        <input type="password" id="password" name="confirm_password" required>
+                    </div>
+                    <button type="submit" id="register" name="register">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    let biodataform = document.getElementById('biodataForm');
+    let username = document.getElementById('username');
+    let password = document.getElementById('nik');
+    const regex = /^[a-zA-Z '.]+$/;
+
+    biodataform.addEventListener('submit', function (event) {
+
+    });
+</script>
+
+</html>

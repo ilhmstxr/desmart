@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../authenticate/login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="row">
+
+        <div class="kiri">
+            <img src="../image/cow.jpeg" alt="">
+        </div>
+        <div class="kanan">
+            <div class="cardLogin">
+                <form class="formLogin" action="login.php" method="post">
+                    <div class="email">
+                        <label for="email">email:</label>
+                        <input type="text" id="email" name="email" required>
+                    </div>
+                    <div class="password">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" id="login" name="login">Login</button>
+                </form>
+                <br>
+                <hr>
+                <p>Belum Punya Akun? <button type="submit" id="register" name="register">Register</button></p>
+                <hr>
+                <div class="anotherWays">
+                    <button type="google">icon google</button>
+                    <button type="facebook">icon facebook</button>
+                    <button type="github">icon github</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>
