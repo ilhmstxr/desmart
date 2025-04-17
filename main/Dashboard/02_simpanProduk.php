@@ -3,7 +3,8 @@ include '../koneksi.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $profil_usaha_id = $_POST['profil_usaha_id'];
+    $id              = isset($_POST['id']) ? intval($_POST['id']) : null;
+    $profil_usaha_id = intval($_POST['profil_usaha_id']);
     $nama_produk     = mysqli_real_escape_string($koneksi, $_POST['nama_produk']);
     $kategori        = mysqli_real_escape_string($koneksi, $_POST['kategori']);
     $harga           = floatval($_POST['harga']);
@@ -30,14 +31,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // Simpan ke database
-    $query = "INSERT INTO Produk (
-                profil_usaha_id, setor_id, nama_produk, kategori, harga, stok, deskripsi, foto_url, lokasi
-              ) VALUES (
-                $profil_usaha_id, $setor_id, '$nama_produk', '$kategori', $harga, $stok, '$deskripsi', '$foto_url', '$lokasi'
-              )";
+    // Cek apakah produk sudah ada (edit mode)
+    if (!empty($id)) {
+        $cekQuery = "SELECT id FROM Produk WHERE id = $id AND profil_usaha_id = $profil_usaha_id";
+        $cekResult = mysqli_query($koneksi, $cekQuery);
 
-    if (mysqli_query($koneksi, $query)) {
+        if ($cekResult && mysqli_num_rows($cekResult) > 0) {
+            // Update data produk
+            $updateQuery = "UPDATE Produk SET 
+                nama_produk = '$nama_produk',
+                kategori = '$kategori',
+                harga = $harga,
+                stok = $stok,
+                deskripsi = '$deskripsi',
+                lokasi = '$lokasi',
+                setor_id = $setor_id";
+
+            if (!empty($foto_url)) {
+                $updateQuery .= ", foto_url = '$foto_url'";
+            }
+
+            $updateQuery .= " WHERE id = $id AND profil_usaha_id = $profil_usaha_id";
+
+            if (mysqli_query($koneksi, $updateQuery)) {
+                echo "<script>alert('Produk berhasil diperbarui'); window.location.href='02_manajemenProduk.php';</script>";
+            } else {
+                echo "Gagal update produk: " . mysqli_error($koneksi);
+            }
+            exit();
+        }
+    }
+
+    // Jika tidak ditemukan, lakukan INSERT
+    $insertQuery = "INSERT INTO Produk (
+        profil_usaha_id, setor_id, nama_produk, kategori, harga, stok, deskripsi, foto_url, lokasi
+    ) VALUES (
+        $profil_usaha_id, $setor_id, '$nama_produk', '$kategori', $harga, $stok, '$deskripsi', '$foto_url', '$lokasi'
+    )";
+
+    if (mysqli_query($koneksi, $insertQuery)) {
         echo "<script>alert('Produk berhasil disimpan'); window.location.href='02_manajemenProduk.php';</script>";
     } else {
         echo "Gagal menyimpan produk: " . mysqli_error($koneksi);

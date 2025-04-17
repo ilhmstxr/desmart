@@ -70,7 +70,7 @@ CREATE TABLE Transaksi (
   tanggal_transaksi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   alamat_pengiriman TEXT,
   catatan TEXT,
-  FOREIGN KEY (user_id) REFERENCES Users(id),
+  FOREIGN KEY (pembeli_id) REFERENCES Users(id),
   FOREIGN KEY (profil_usaha_id) REFERENCES Profil_Usaha(id)
 );
 

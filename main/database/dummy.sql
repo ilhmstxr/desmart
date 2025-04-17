@@ -47,7 +47,7 @@ INSERT INTO Produk (profil_usaha_id, setor_id, nama_produk, kategori, harga, sto
 
 -- dummy transaksi
 -- 10 Transaksi tambahan, selang-seling antara 2 seller
-INSERT INTO Transaksi (user_id, profil_usaha_id, total, status, metode_pembayaran, alamat_pengiriman, catatan) VALUES
+INSERT INTO Transaksi (pembeli_id, profil_usaha_id, total, status, metode_pembayaran, alamat_pengiriman, catatan) VALUES
 (2, 1, 38000.00, 'selesai', 'Transfer Bank', 'Jl. Melati No.10', 'Cepat ya'),
 (2, 2, 175000.00, 'dikirim', 'COD', 'Jl. Dahlia No.20', ''),
 (2, 1, 42000.00, 'diproses', 'E-wallet', 'Jl. Melati No.10', 'Titip tetangga'),
