@@ -1,10 +1,45 @@
+<?php
+include '../koneksi.php';
+session_start();
+
+// Pastikan user sudah login
+if (!isset($_SESSION['userId'])) {
+    echo "<script>alert('Silakan login terlebih dahulu'); window.location.href='../authenticate/login.html';</script>";
+    exit();
+}
+
+$userId = $_SESSION['userId'];
+
+// Ambil profil usaha berdasarkan user ID
+$queryUsaha = "SELECT id FROM profil_usaha WHERE user_id = $userId";
+$resultUsaha = mysqli_query($koneksi, $queryUsaha);
+
+$setorList = [];
+$profilUsahaId = 0;
+
+if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
+    $dataUsaha = mysqli_fetch_assoc($resultUsaha);
+    $profilUsahaId = $dataUsaha['id'];
+
+    // Ambil semua data setor hasil berdasarkan profil usaha
+    $querySetor = "SELECT * FROM Setor_Hasil WHERE profil_usaha_id = $profilUsahaId ORDER BY tanggal_setor ASC";
+    $resultSetor = mysqli_query($koneksi, $querySetor);
+
+    if ($resultSetor) {
+        while ($row = mysqli_fetch_assoc($resultSetor)) {
+            $setorList[] = $row;
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setor Panen</title>
+    <title>Dashboard Desmart</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .form-container {
@@ -79,7 +114,7 @@
             <input type="text" placeholder="Search...">
         </header>
         <div class="welcome-message">
-            <h1>Silahkan isi hasil panen atau ternak anda!</h1>
+            <h1>Selamat Datang di Desmart!</h1>
         </div>
         <div class="content-wrapper">
             <nav>
@@ -92,24 +127,20 @@
                     <li><a href="06_riwayatPenjualan.php">Riwayat Penjualan</a></li>
                     <li><a href="07_pengaturan.php">Pengaturan</a></li>
                     <li><a href="08_laporanAnalitik.php">Laporan & Analitik</a></li>
-                    <li><a href="#">Keluar</a></li>
+                    <li><a href="../authenticate/logout.php">Keluar</a></li>
                 </ul>
             </nav>
-
+            <!-- dashboard -->
             <main>
                 <div class="form-container">
                     <h2>Form Setor Ternak / Panen</h2>
                     <form id="panenForm" action="03_prosesSetor.php" method="POST">
-                        <div class="form-group">
-                            <label for="profil_usaha_id">ID Profil Usaha</label>
-                            <input type="number" id="profil_usaha_id" name="profil_usaha_id" required>
-                        </div>
+                        <input type="hidden" name="profil_usaha_id" value="<?= $profilUsahaId ?>">
                         <div class="form-group">
                             <label for="nama_komoditas">Nama Komoditas</label>
                             <input type="text" id="nama_komoditas" name="nama_komoditas" required oninput="validateTextInput(this)">
                             <span class="error-message" id="error-message">Hanya bisa diisi menggunakan huruf</span>
                         </div>
-
                         <div class="form-group">
                             <label for="jumlah">Jumlah</label>
                             <input type="number" id="jumlah" name="jumlah" required>
@@ -138,6 +169,38 @@
                     </form>
                 </div>
 
+                <section class="task-management">
+                    <h2>Data Setoran Komoditas</h2>
+                    <table>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Komoditas</th>
+                            <th>Jumlah</th>
+                            <th>Satuan</th>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                        </tr>
+                        <?php if (count($setorList) > 0): ?>
+                            <?php
+                            $n = 1;
+                            foreach ($setorList as $setor):
+                            ?>
+                                <tr>
+                                    <td><?= $n++ ?></td>
+                                    <td><?= htmlspecialchars($setor['nama_komoditas']) ?></td>
+                                    <td><?= $setor['jumlah'] ?></td>
+                                    <td><?= htmlspecialchars($setor['satuan']) ?></td>
+                                    <td><?= date('d-m-Y', strtotime($setor['tanggal_setor'])) ?></td>
+                                    <td><?= htmlspecialchars($setor['keterangan']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6">Belum ada hasil yang disetor.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </table>
+                </section>
             </main>
         </div>
     </div>

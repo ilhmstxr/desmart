@@ -28,7 +28,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("isisss", $profil_usaha_id, $nama_komoditas, $jumlah, $satuan, $tanggal_setor, $keterangan);
 
 if ($stmt->execute()) {
-    echo "<script>alert('Data berhasil disimpan!'); window.location.href = '03_setorHasilUsaha.html';</script>";
+    echo "<script>alert('Data berhasil disimpan!'); window.location.href = '03_setorHasilUsaha.php';</script>";
 } else {
     echo "Gagal menyimpan data: " . $conn->error;
 }
