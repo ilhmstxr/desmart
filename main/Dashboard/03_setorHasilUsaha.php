@@ -22,7 +22,7 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
     $profilUsahaId = $dataUsaha['id'];
 
     // Ambil semua data setor hasil berdasarkan profil usaha
-    $querySetor = "SELECT * FROM Setor_Hasil WHERE profil_usaha_id = $profilUsahaId ORDER BY tanggal_setor DESC";
+    $querySetor = "SELECT * FROM Setor_Hasil WHERE profil_usaha_id = $profilUsahaId ORDER BY tanggal_setor ASC";
     $resultSetor = mysqli_query($koneksi, $querySetor);
 
     if ($resultSetor) {
@@ -119,14 +119,14 @@ if ($resultUsaha && mysqli_num_rows($resultUsaha) > 0) {
         <div class="content-wrapper">
             <nav>
                 <ul>
-                    <li><a href="01_Dashboard..php">Dashboard</a></li>
+                    <li><a href="01_Dashboard.php">Dashboard</a></li>
                     <li><a href="02_manajemenProduk.php">Manajemen Produk</a></li>
                     <li class="active"><a href="#">Setor Hasil Usaha</a></li>
-                    <li><a href="04_katalogProduk..php">Lihat Katalog Produk</a></li>
-                    <li><a href="05_pesanan..php">Pesanan</a></li>
-                    <li><a href="06_riwayatPenjualan..php">Riwayat Penjualan</a></li>
-                    <li><a href="07_pengaturan..php">Pengaturan</a></li>
-                    <li><a href="08_laporanAnalitik..php">Laporan & Analitik</a></li>
+                    <li><a href="04_katalogProduk.php">Lihat Katalog Produk</a></li>
+                    <li><a href="05_pesanan.php">Pesanan</a></li>
+                    <li><a href="06_riwayatPenjualan.php">Riwayat Penjualan</a></li>
+                    <li><a href="07_pengaturan.php">Pengaturan</a></li>
+                    <li><a href="08_laporanAnalitik.php">Laporan & Analitik</a></li>
                     <li><a href="../authenticate/logout.php">Keluar</a></li>
                 </ul>
             </nav>
