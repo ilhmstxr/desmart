@@ -45,3 +45,52 @@ INSERT INTO Produk (profil_usaha_id, setor_id, nama_produk, kategori, harga, sto
 (1, NULL, 'Bawang Merah 1kg', 'Sayur & Buah', 20000, 45, 'Bawang merah lokal', '', 'Sukamaju'),
 (1, NULL, 'Ubi Cilembu 1kg', 'Pangan', 12000, 50, 'Ubi manis dari Cilembu', '', 'Sukamaju');
 
+-- dummy transaksi
+-- 10 Transaksi tambahan, selang-seling antara 2 seller
+INSERT INTO Transaksi (user_id, profil_usaha_id, total, status, metode_pembayaran, alamat_pengiriman, catatan) VALUES
+(2, 1, 38000.00, 'selesai', 'Transfer Bank', 'Jl. Melati No.10', 'Cepat ya'),
+(2, 2, 175000.00, 'dikirim', 'COD', 'Jl. Dahlia No.20', ''),
+(2, 1, 42000.00, 'diproses', 'E-wallet', 'Jl. Melati No.10', 'Titip tetangga'),
+(2, 2, 140000.00, 'menunggu_pembayaran', 'Transfer Bank', 'Jl. Dahlia No.20', 'Kirim jam 9'),
+(2, 1, 55000.00, 'selesai', 'Transfer Bank', 'Jl. Melati No.10', ''),
+(2, 2, 195000.00, 'diproses', 'COD', 'Jl. Dahlia No.20', ''),
+(2, 1, 22000.00, 'selesai', 'E-wallet', 'Jl. Melati No.10', 'Segera ya'),
+(2, 2, 150000.00, 'dikirim', 'Transfer Bank', 'Jl. Dahlia No.20', 'Kambing jangan lupa'),
+(2, 1, 27000.00, 'selesai', 'E-wallet', 'Jl. Melati No.10', ''),
+(2, 2, 215000.00, 'diproses', 'Transfer Bank', 'Jl. Dahlia No.20', 'Telur duluan ya');
+
+-- dummy transaksi detail
+INSERT INTO Transaksi_Detail (transaksi_id, produk_id, jumlah, harga_satuan, subtotal) VALUES
+-- Transaksi 3
+(3, 10, 2, 9000.00, 18000.00),
+(3, 13, 2, 10000.00, 20000.00),
+
+-- Transaksi 4
+(4, 6, 1, 140000.00, 140000.00),
+(4, 8, 1, 25000.00, 25000.00),
+(4, 16, 1, 10000.00, 10000.00),
+
+-- Transaksi 5
+(5, 11, 2, 5000.00, 10000.00),
+(5, 14, 1, 30000.00, 30000.00),
+(5, 23, 1, 2000.00, 2000.00),
+
+-- Transaksi 6
+(6, 6, 1, 140000.00, 140000.00),
+
+-- Transaksi 7
+(7, 19, 1, 45000.00, 45000.00),
+(7, 20, 1, 10000.00, 10000.00),
+
+-- Transaksi 8
+(8, 15, 1, 50000.00, 50000.00),
+(8, 16, 1, 27000.00, 27000.00),
+(8, 5, 1, 120000.00, 120000.00),
+
+-- Transaksi 9
+(9, 24, 1, 20000.00, 20000.00),
+(9, 21, 1, 2000.00, 2000.00),
+
+-- Transaksi 10
+(10, 7, 2, 20000.00, 40000.00),
+(10, 5, 1, 110000.00, 110000.00)

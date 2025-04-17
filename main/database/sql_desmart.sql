@@ -62,15 +62,18 @@ FOREIGN KEY (produk_id) REFERENCES Produk(id)
 -- Tabel Transaksi
 CREATE TABLE Transaksi (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL, -- pembeli
+  pembeli_id INT NOT NULL,              -- pembeli
+  profil_usaha_id INT NOT NULL,      -- penjual
   total DECIMAL(12,2) NOT NULL,
-  status VARCHAR(30) DEFAULT 'menunggu_pembayaran', -- ENUM'menunggu_pembayaran', 'diproses', 'dikirim', 'selesai', 'dibatalkan'
+  status VARCHAR(30) DEFAULT 'menunggu_pembayaran', -- enum-like status
   metode_pembayaran VARCHAR(50),
   tanggal_transaksi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   alamat_pengiriman TEXT,
   catatan TEXT,
-  FOREIGN KEY (user_id) REFERENCES Users(id)
+  FOREIGN KEY (user_id) REFERENCES Users(id),
+  FOREIGN KEY (profil_usaha_id) REFERENCES Profil_Usaha(id)
 );
+
 
 -- Tabel Transaksi_Detail
 CREATE TABLE Transaksi_Detail (
