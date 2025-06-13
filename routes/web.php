@@ -14,6 +14,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ToolController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -29,7 +30,7 @@ Route::post('/register', [AuthController::class, 'register']);
 // Protected routes
 // Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     
     // Farm management (Admin and Managers only)
     Route::middleware('role:admin,manager')->group(function () {
@@ -59,6 +60,9 @@ Route::post('/register', [AuthController::class, 'register']);
     Route::resource('sales', SaleController::class);
     Route::resource('expenses', ExpenseController::class);
 
+
+
+    Route::Resource('tools', ToolController::class);
     // User management and system settings (Admin only)
     Route::middleware('role:admin')->group(function () {
         Route::resource('users', UserController::class);

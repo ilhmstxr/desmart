@@ -11,7 +11,7 @@ class CropController extends Controller
      */
     public function index()
     {
-        //
+        return view('crops.index');
     }
 
     /**

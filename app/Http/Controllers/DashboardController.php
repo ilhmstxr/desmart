@@ -33,6 +33,6 @@ class DashboardController extends Controller
         //     })->with('field')->latest()->take(5)->get();
 
         // return view('dashboard', compact('stats', 'recentCrops'));
-        return view('dashboard');
+        return view('dashboard.index');
     }
 }

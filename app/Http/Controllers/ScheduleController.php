@@ -13,22 +13,23 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         
-        $query = Schedule::with(['field', 'crop', 'assignedTo', 'createdBy']);
+        // $query = Schedule::with(['field', 'crop', 'assignedTo', 'createdBy']);
         
-        if (!$user->isAdmin()) {
-            $query->where(function($q) use ($user) {
-                $q->where('assigned_to', $user->id)
-                  ->orWhere('created_by', $user->id);
-            });
-        }
+        // if (!$user->isAdmin()) {
+        //     $query->where(function($q) use ($user) {
+        //         $q->where('assigned_to', $user->id)
+        //           ->orWhere('created_by', $user->id);
+        //     });
+        // }
         
-        $schedules = $query->orderBy('scheduled_at')->paginate(15);
-        $upcomingCount = Schedule::upcoming()->count();
-        $overdueCount = Schedule::overdue()->count();
+        // $schedules = $query->orderBy('scheduled_at')->paginate(15);
+        // $upcomingCount = Schedule::upcoming()->count();
+        // $overdueCount = Schedule::overdue()->count();
         
-        return view('schedules.index', compact('schedules', 'upcomingCount', 'overdueCount'));
+        // return view('schedules.index', compact('schedules', 'upcomingCount', 'overdueCount'));
+        return view('schedules.index');
     }
 
     public function create()

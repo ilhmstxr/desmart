@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\tool;
 use Illuminate\Http\Request;
 
-class FieldController extends Controller
+class ToolController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('field.index');
+        return view('tools.index');
     }
 
     /**
@@ -33,7 +34,7 @@ class FieldController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(tool $tool)
     {
         //
     }
@@ -41,7 +42,7 @@ class FieldController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(tool $tool)
     {
         //
     }
@@ -49,7 +50,7 @@ class FieldController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, tool $tool)
     {
         //
     }
@@ -57,7 +58,7 @@ class FieldController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(tool $tool)
     {
         //
     }
