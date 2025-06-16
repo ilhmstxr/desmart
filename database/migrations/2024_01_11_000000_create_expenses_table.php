@@ -10,18 +10,24 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->string('expense_number')->unique();
-            $table->string('category'); // Seeds, Fertilizer, Equipment, Labor, etc.
-            $table->string('description');
-            $table->decimal('amount', 10, 2);
-            $table->date('expense_date');
+            $table->text('description')->nullable(); // Diubah menjadi TEXT
             $table->string('vendor_name')->nullable();
+
+            // Relasi
+            $table->foreignId('expenses_category_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('field_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('crop_id')->nullable()->constrained()->onDelete('set null');
+
+            $table->date('expense_date');
+
+
+            $table->string('expense_number')->unique();
+            $table->decimal('amount', 10, 2);
             $table->enum('payment_method', ['cash', 'bank_transfer', 'check', 'credit_card'])->default('cash');
             $table->enum('status', ['pending', 'paid', 'overdue'])->default('pending');
-            $table->foreignId('field_id')->nullable()->constrained();
-            $table->foreignId('crop_id')->nullable()->constrained();
             $table->string('receipt_path')->nullable();
             $table->text('notes')->nullable();
+
             $table->foreignId('created_by')->constrained('users');
             $table->timestamps();
         });

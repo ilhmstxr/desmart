@@ -1,16 +1,16 @@
 @extends('layout.app')
 @section('content')
- 
+
     <div class="p-6 lg:p-8 space-y-6">
         <nav class="text-sm font-medium text-gray-500" aria-label="Breadcrumb">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
                     <a href="#" class="hover:text-gray-700">Dashboard</a>
-                    <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                    <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569 9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
                 </li>
                 <li class="flex items-center">
                     <a href="#" class="hover:text-gray-700">Livestock</a>
-                    <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                    <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569 9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
                 </li>
                 <li class="text-gray-400">
                    Add New Livestock
@@ -21,31 +21,34 @@
         <div class="bg-blue-600 text-white p-5 rounded-lg">
             <h2 class="text-lg font-bold">Add New Livestock</h2>
             <p class="text-sm text-blue-200">Select an animal type to begin</p>
-            <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-                <div class="bg-white text-blue-700 p-4 rounded-lg shadow-sm cursor-pointer border-2 border-white">
+            <div id="animal-type-selector" class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                {{-- Added data-animal attribute to each div for JS targeting --}}
+                <div data-animal="Cattle" class="animal-choice bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
                     <p class="font-semibold">Cattle</p>
                 </div>
-                 <div class="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
+                 <div data-animal="Pig" class="animal-choice bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
                     <p class="font-semibold">Pig</p>
                 </div>
-                 <div class="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
+                 <div data-animal="Sheep" class="animal-choice bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
                     <p class="font-semibold">Sheep</p>
                 </div>
-                 <div class="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
+                 <div data-animal="Goat" class="animal-choice bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
                     <p class="font-semibold">Goat</p>
                 </div>
-                 <div class="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
+                 <div data-animal="Rabbit" class="animal-choice bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
                     <p class="font-semibold">Rabbit</p>
                 </div>
-                <div class="bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
+                <div data-animal="Poultry" class="animal-choice bg-blue-700 hover:bg-blue-800 p-4 rounded-lg cursor-pointer border-2 border-blue-500">
                     <p class="font-semibold">Poultry</p>
                 </div>
             </div>
         </div>
 
-        <div>
+        {{-- Added id and style="display: none;" to hide the form initially --}}
+        <div id="add-livestock-form" style="display: none;">
             <div class="bg-blue-50 p-5 rounded-t-lg flex items-center gap-4">
-                <h2 class="text-lg font-bold text-blue-800">Add New Cattle</h2>
+                {{-- Added id to the h2 for easy content update --}}
+                <h2 id="livestock-form-title" class="text-lg font-bold text-blue-800"></h2>
                 <p class="text-sm text-blue-700">Fill in the details to add a new animal to your farm inventory</p>
             </div>
             <form action="#" method="POST" class="bg-white p-8 rounded-b-lg shadow-sm space-y-8">
@@ -251,3 +254,44 @@
     </div>
     
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const animalChoices = document.querySelectorAll('.animal-choice');
+        const livestockForm = document.getElementById('add-livestock-form');
+        const formTitle = document.getElementById('livestock-form-title');
+
+        // Define the class lists for active and inactive states based on your TailwindCSS setup
+        const activeClasses = ['bg-white', 'text-blue-700', 'border-white'];
+        const inactiveClasses = ['bg-blue-700', 'hover:bg-blue-800', 'text-white', 'border-blue-500'];
+
+        animalChoices.forEach(choice => {
+            choice.addEventListener('click', function () {
+                // Get the selected animal name from the data attribute
+                const animalName = this.dataset.animal;
+
+                // Show the form
+                livestockForm.style.display = 'block';
+
+                // Update the form title
+                formTitle.textContent = `Add New ${animalName}`;
+
+                // Update the styles for all choices
+                animalChoices.forEach(c => {
+                    // Reset all to inactive state first
+                    c.classList.remove(...activeClasses);
+                    c.classList.add(...inactiveClasses);
+                });
+
+                // Apply active style to the clicked choice
+                this.classList.remove(...inactiveClasses);
+                this.classList.add(...activeClasses);
+                
+                // Optional: Scroll to the form for better user experience on small screens
+                livestockForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    });
+</script>
+@endpush

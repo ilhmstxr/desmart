@@ -10,12 +10,22 @@ return new class extends Migration
     {
         Schema::create('farms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('location');
-            $table->decimal('total_area', 10, 2);
-            $table->foreignId('owner_id')->constrained('users');
+            $table->string('name'); // nama pertanian
+            $table->string('location'); // lokasi pertanian (alamat)
+            $table->geometry('boundary')->nullable(); // batas pertanian
+            $table->text('description')->nullable(); // deskripsi pertanian
+            $table->decimal('total_area', 10, 2); // total luas pertanian (m2)
+            $table->enum('status', ['active', 'inactive', 'archived'])->default('active'); // status, default active
+
+            // Relasi
+            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade'); // pemilik pertanian
+
+            // Timestamps
             $table->timestamps();
+
+            // Peningkatan Performa & Integritas Data
+            // $table->index('name', 'farms_name_index'); 
+            // $table->unique(['owner_id', 'name'], 'farms_owner_id_name_unique'); 
         });
     }
 

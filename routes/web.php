@@ -18,6 +18,9 @@ use App\Http\Controllers\ToolController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
+Route::get('/login', function () {
+    return redirect('/login');
+});
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -68,5 +71,34 @@ Route::post('/register', [AuthController::class, 'register']);
         Route::resource('users', UserController::class);
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
+    });
+
+    route::get('/tambahcrops', function () {
+        return view('crops.tambah');
+    });
+
+    route::get('/14', function () {
+        return view('crops.14');
+    });
+    route::get('/16', function () {
+        return view('crops.16');
+    });
+    route::get('/11', function () {
+        return view('field.11');
+    });
+    route::get('/13', function () {
+        return view('field.13');
+    });
+    route::get('/10', function () {
+        return view('livestock.10');
+    });
+    route::get('/18', function () {
+        return view('schedules.18');
+    });
+    route::get('/19', function () {
+        return view('schedules.19');
+    });
+    route::get('/20', function () {
+        return view('schedules.20');
     });
 // });

@@ -12,22 +12,31 @@ return new class extends Migration
             $table->id();
             $table->string('sale_number')->unique();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('marketplace_listing_id')->nullable()->constrained();
             $table->string('customer_name');
             $table->string('customer_email')->nullable();
             $table->string('customer_phone')->nullable();
             $table->integer('quantity_sold');
             $table->decimal('unit_price', 10, 2);
             $table->decimal('total_amount', 10, 2);
-            $table->decimal('commission_amount', 10, 2)->default(0);
             $table->decimal('net_amount', 10, 2);
             $table->enum('payment_status', ['pending', 'paid', 'partial', 'refunded'])->default('pending');
-            $table->enum('delivery_status', ['pending', 'shipped', 'delivered', 'cancelled'])->default('pending');
             $table->date('sale_date');
             $table->date('delivery_date')->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->constrained('users');
+
+            $table->decimal('commission_amount', 10, 2)->nullable();
+            // product_id dihapus
+            $table->enum('delivery_status', ['pending', 'packed', 'shipped', 'delivered', 'cancelled'])->default('pending');
+
+            // Relasi
+            $table->foreignId('marketplace_listing_id')->constrained()->onDelete('cascade');
+            $table->foreignId('processed_by_user_id')->nullable()->constrained('users')->onDelete('set null');
+
             $table->timestamps();
+
+            // Indexing
+            $table->index('customer_email');
         });
     }
 
