@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 
 class Sale extends Model
 {
@@ -11,7 +13,6 @@ class Sale extends Model
 
     protected $fillable = [
         'sale_number',
-        'product_id',
         'marketplace_listing_id',
         'customer_name',
         'customer_email',
@@ -26,35 +27,40 @@ class Sale extends Model
         'sale_date',
         'delivery_date',
         'notes',
-        'created_by',
+        'processed_by_user_id',
     ];
 
     protected $casts = [
-        'sale_date' => 'date',
-        'delivery_date' => 'date',
+        'sale_date' => 'datetime',
+        'delivery_date' => 'datetime',
     ];
 
-    public function product()
+    // --- RELASI ---
+
+    public function listing()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(MarketplaceListing::class, 'marketplace_listing_id');
     }
 
-    public function marketplaceListing()
+    public function processor()
     {
-        return $this->belongsTo(MarketplaceListing::class);
+        return $this->belongsTo(User::class, 'processed_by_user_id');
     }
 
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
+    // --- BOOT METHOD ---
 
     protected static function boot()
     {
         parent::boot();
 
+        // Logika pembuatan nomor unik yang lebih aman
         static::creating(function ($sale) {
-            $sale->sale_number = 'SALE-' . date('Y') . '-' . str_pad(static::count() + 1, 6, '0', STR_PAD_LEFT);
+            if (empty($sale->sale_number)) {
+                $date = now()->format('Ymd');
+                $random = Str::upper(Str::random(6));
+                $random = Str::upper(Str::random(6));
+                $sale->sale_number = "SALE-{$date}-{$random}";
+            }
         });
     }
 }

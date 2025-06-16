@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Expense extends Model
 {
     use HasFactory;
-
+    protected $table = 'marketplace_listings';
     protected $fillable = [
         'expense_number',
-        'category',
+        'expense_category_id',
         'description',
         'amount',
         'expense_date',
@@ -21,13 +22,19 @@ class Expense extends Model
         'field_id',
         'crop_id',
         'receipt_path',
-        'notes',
-        'created_by',
+        'notes'
     ];
 
     protected $casts = [
-        'expense_date' => 'date',
+        'expense_date' => 'datetime',
     ];
+
+    // --- RELASI ---
+
+    public function category()
+    {
+        return $this->belongsTo(expenses_category::class, 'expense_category_id');
+    }
 
     public function field()
     {
@@ -39,17 +46,19 @@ class Expense extends Model
         return $this->belongsTo(Crop::class);
     }
 
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
+    // --- BOOT METHOD ---
 
     protected static function boot()
     {
         parent::boot();
 
+        // Logika pembuatan nomor unik yang lebih aman
         static::creating(function ($expense) {
-            $expense->expense_number = 'EXP-' . date('Y') . '-' . str_pad(static::count() + 1, 6, '0', STR_PAD_LEFT);
+            if (empty($expense->expense_number)) {
+                $date = now()->format('Ymd');
+                $random = Str::upper(Str::random(6));
+                $expense->expense_number = "EXP-{$date}-{$random}";
+            }
         });
     }
 }

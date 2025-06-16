@@ -13,55 +13,79 @@ class Product extends Model
         'name',
         'sku',
         'description',
-        'price_per_unit',
+        'base_price_per_unit',
         'unit_type',
         'stock_quantity',
         'minimum_stock',
         'status',
-        'category',
         'images',
         'cost_per_unit',
+        'product_category_id',
         'crop_id',
-        'created_by',
+        'created_by_user_id',
     ];
 
     protected $casts = [
         'images' => 'array',
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(product_categories::class, 'product_category_id');
+    }
+
     public function crop()
     {
         return $this->belongsTo(Crop::class);
     }
 
-    public function createdBy()
+    public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by_user_id');
     }
 
-    public function marketplaceListings()
+    public function listings()
     {
         return $this->hasMany(MarketplaceListing::class);
     }
 
+    /**
+     * Relasi untuk mengambil semua sales dari sebuah produk MELALUI listings.
+     */
     public function sales()
     {
-        return $this->hasMany(Sale::class);
+        return $this->hasManyThrough(Sale::class, MarketplaceListing::class);
     }
 
-    public function isLowStock()
+    // --- METHOD BANTU ---
+
+    /**
+     * Cek apakah stok produk rendah.
+     */
+    public function isLowStock(): bool
     {
         return $this->stock_quantity <= $this->minimum_stock;
     }
 
-    public function getProfitMarginAttribute()
+    // --- ACCESSOR & MUTATOR ---
+
+    /**
+     * Menghitung margin keuntungan.
+     */
+    public function getProfitMarginAttribute(): float
     {
-        if (!$this->cost_per_unit) return 0;
-        return (($this->price_per_unit - $this->cost_per_unit) / $this->price_per_unit) * 100;
+        if (!$this->base_price_per_unit || $this->base_price_per_unit == 0) {
+            return 0;
+        }
+        return (($this->base_price_per_unit - $this->cost_per_unit) / $this->base_price_per_unit) * 100;
     }
 
-    public function getTotalRevenueAttribute()
+    /**
+     * Menghitung total pendapatan dari produk ini.
+     */
+    public function getTotalRevenueAttribute(): float
     {
+        // Catatan: Ini bisa menyebabkan N+1 query. Lihat penjelasan di bawah.
         return $this->sales()->where('payment_status', 'paid')->sum('total_amount');
     }
 }
