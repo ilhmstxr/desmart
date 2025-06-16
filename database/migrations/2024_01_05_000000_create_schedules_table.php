@@ -10,6 +10,8 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('assigned_to')->nullable()->constrained('users');
+            $table->foreignId('created_by')->constrained('users');
             $table->string('title');
             $table->text('description')->nullable();
             $table->enum('type', ['planting', 'irrigation', 'fertilizing', 'harvesting', 'maintenance', 'inspection']);
@@ -17,11 +19,9 @@ return new class extends Migration
             $table->datetime('completed_at')->nullable();
             $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled'])->default('pending');
             $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('medium');
-            $table->foreignId('field_id')->nullable()->constrained();
             $table->foreignId('crop_id')->nullable()->constrained();
-            $table->foreignId('assigned_to')->nullable()->constrained('users');
-            $table->foreignId('created_by')->constrained('users');
             $table->json('notes')->nullable();
+            $table->foreignId('field_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

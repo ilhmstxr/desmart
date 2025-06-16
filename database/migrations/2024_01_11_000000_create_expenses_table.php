@@ -10,13 +10,11 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('crop_id')->nullable()->constrained()->onDelete('set null');
+
             $table->text('description')->nullable(); // Diubah menjadi TEXT
             $table->string('vendor_name')->nullable();
-
-            // Relasi
-            $table->foreignId('expenses_category_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('field_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('crop_id')->nullable()->constrained()->onDelete('set null');
 
             $table->date('expense_date');
 
@@ -28,7 +26,8 @@ return new class extends Migration
             $table->string('receipt_path')->nullable();
             $table->text('notes')->nullable();
 
-            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('field_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('expenses_category_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

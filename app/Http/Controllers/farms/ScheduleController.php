@@ -35,11 +35,16 @@ class ScheduleController extends Controller
 
     public function create()
     {
-        $fields = Field::all();
-        $crops = Crop::all();
-        $users = User::where('is_active', true)->get();
+        // $fields = Field::all();
+        // $crops = Crop::all();
+        // $users = User::where('is_active', true)->get();
         
+        $fields = [1,2,3,4];
+        $crops = 1;
+        $users = 1;
+
         return view('schedules.create', compact('fields', 'crops', 'users'));
+        // return view('schedules.create');
     }
 
     public function store(Request $request)

@@ -9,7 +9,7 @@
                 <h2 class="text-2xl font-bold text-gray-800">Jadwal & Pengingat</h2>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
-                <button
+                <a href="{{ route('schedules.create') }}"
                     class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2 text-sm font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
@@ -17,7 +17,7 @@
                             clip-rule="evenodd" />
                     </svg>
                     Tambah Jadwal
-                </button>
+                </a>
                 <button
                     class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2 text-sm font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

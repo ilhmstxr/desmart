@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('marketplace_listings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('marketplace_name'); // Local Market, Online Store, etc.
             $table->decimal('listing_price', 10, 2);
             $table->integer('quantity_listed');
@@ -23,9 +24,7 @@ return new class extends Migration
             $table->timestamp('listed_date')->nullable();
 
             // Relasi
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('marketplace_id')->constrained()->onDelete('cascade');
-
         });
     }
 

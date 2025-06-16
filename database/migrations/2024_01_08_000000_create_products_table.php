@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_category_id')->nullable()->constrained()->onDelete('set null');
             $table->string('name');
             $table->string('sku')->unique();
             $table->decimal('price_per_unit', 10, 2);
@@ -25,7 +26,6 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             // Relasi
-            $table->foreignId('product_category_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('crop_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('set null');
 

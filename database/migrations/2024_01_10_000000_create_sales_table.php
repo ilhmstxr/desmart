@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('marketplace_listing_id')->constrained()->onDelete('cascade');
             $table->string('sale_number')->unique();
             $table->foreignId('product_id')->constrained();
             $table->string('customer_name');
@@ -30,7 +31,6 @@ return new class extends Migration
             $table->enum('delivery_status', ['pending', 'packed', 'shipped', 'delivered', 'cancelled'])->default('pending');
 
             // Relasi
-            $table->foreignId('marketplace_listing_id')->constrained()->onDelete('cascade');
             $table->foreignId('processed_by_user_id')->nullable()->constrained('users')->onDelete('set null');
 
             $table->timestamps();
