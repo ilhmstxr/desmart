@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\farms;
 
+use App\Http\Controllers\Controller; 
 use App\Models\Schedule;
 use App\Models\Field;
 use App\Models\Crop;

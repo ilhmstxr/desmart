@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
 
+
+namespace App\Http\Controllers\finances;
+
+use App\Http\Controllers\Controller; 
 use App\Models\product_categories;
 use Illuminate\Http\Request;
 

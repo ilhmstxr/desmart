@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\farms;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CropController extends Controller
@@ -11,6 +12,7 @@ class CropController extends Controller
      */
     public function index()
     {
+
         return view('crops.index');
     }
 
@@ -19,7 +21,18 @@ class CropController extends Controller
      */
     public function create()
     {
-        //
+        return view('crops.tambah');
+    }
+
+    public function maintenance()
+    {
+        // return true;
+        return view('crops.maintenance');
+    }
+
+    public function harvest()
+    {
+        return view('harvest.add');
     }
 
     /**

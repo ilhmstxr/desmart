@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\farms;
+
+use App\Http\Controllers\Controller; 
 
 use App\Models\plant_varieties;
 use Illuminate\Http\Request;

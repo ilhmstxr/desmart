@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\finances;
 
+use App\Http\Controllers\Controller; 
 use App\Models\Expense;
 use App\Models\Field;
 use App\Models\Crop;

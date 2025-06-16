@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,20 +12,20 @@ class SettingsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         if (!$user->isAdmin()) {
             abort(403, 'Only administrators can access settings.');
         }
-        
+
         $settings = Setting::orderBy('group')->orderBy('key')->get()->groupBy('group');
-        
+
         return view('settings.index', compact('settings'));
     }
 
     public function update(Request $request)
     {
         $user = Auth::user();
-        
+
         if (!$user->isAdmin()) {
             abort(403, 'Only administrators can update settings.');
         }
@@ -38,7 +39,7 @@ class SettingsController extends Controller
             } else {
                 $type = 'string';
             }
-            
+
             Setting::updateOrCreate(
                 ['key' => $key],
                 ['value' => $value, 'type' => $type]
@@ -57,7 +58,7 @@ class SettingsController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
@@ -74,7 +75,7 @@ class SettingsController extends Controller
         }
 
         $updateData = $request->only(['name', 'email', 'phone', 'address']);
-        
+
         if ($request->filled('password')) {
             $updateData['password'] = Hash::make($request->password);
         }

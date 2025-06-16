@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\finances;
+
+use App\Http\Controllers\Controller; 
 
 use App\Models\Product;
 use App\Models\Sale;
