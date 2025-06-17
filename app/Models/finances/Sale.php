@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\finances;
 
+use App\Models\User;
+use Database\Factories\salesFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -62,5 +64,11 @@ class Sale extends Model
                 $sale->sale_number = "SALE-{$date}-{$random}";
             }
         });
+    }
+
+    protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return salesFactory::new();
     }
 }

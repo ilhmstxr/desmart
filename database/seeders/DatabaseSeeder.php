@@ -19,16 +19,18 @@ class DatabaseSeeder extends Seeder
             userSeeder::class,
             farmSeeder::class,
             fieldSeeder::class,
+
             expensesCategorySeeder::class,
             productCategorySeeder::class,
             marketplacesSeeder::class,
             plantVarietiesSeeder::class,
             growthStagesSeeder::class,
+
             cropSeeder::class,
-            expensesSeeder::class,
+            productSeeder::class,
+            expenseSeeder::class,
             marketplaceListingsSeeder::class,
             salesSeeder::class,
-            productSeeder::class,
             scheduleSeeder::class,
         ]);
     }

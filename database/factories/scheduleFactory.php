@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Crop;
-use App\Models\Field;
+use App\Models\farms\Crop;
+use App\Models\farms\Field;
+use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class scheduleFactory extends Factory
 {
+    protected $model = Schedule::class;
+
     /**
      * Define the model's default state.
      *

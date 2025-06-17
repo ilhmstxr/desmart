@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Field;
-use App\Models\growth_stages;
-use App\Models\plant_varieties;
+use App\Models\farms\Crop;
+use App\Models\farms\Field;
+use App\Models\farms\growth_stages;
+use App\Models\farms\plant_varieties;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,17 +13,41 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class cropFactory extends Factory
 {
+    protected $model = Crop::class;
+
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
+
+    private static $plantData = [
+        'Padi' => ['Ciherang', 'IR64', 'Mekongga'],
+        'Jagung' => ['Bisi-18', 'Pioneer 27', 'NK212'],
+        'Tomat' => ['Servo F1', 'Roma', 'Cherry'],
+        'Cabai' => ['Rawit', 'Keriting', 'Besar'],
+        'Bawang Merah' => ['Bima Brebes', 'Pikatan'],
+        'Timun' => ['Hercules', 'Tornado'],
+    ];
+
     public function definition(): array
     {
+        $plantName = $this->faker->randomElement(array_keys(self::$plantData));
+
+        $varietyName = $this->faker->randomElement(self::$plantData[$plantName]);
+
+        $plantVariety = plant_varieties::firstOrCreate(
+            [
+                'plant_name' => $plantName,
+                'variety_name' => $varietyName
+            ],
+            ['description' => "Varitas $varietyName dari tanaman $plantName"]
+        );
+
         return [
             'field_id' => Field::factory(),
-            'name' => $this->faker->word,
-            'plant_variety_id' => plant_varieties::factory(),
+            'name' => $plantName,
+            'plant_variety_id' => $plantVariety->id,
             'current_stage_id' => growth_stages::factory(),
             'area' => $this->faker->randomFloat(2, 1, 50),
             'planted_date' => $this->faker->date(),

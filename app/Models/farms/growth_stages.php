@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\farms;
 
+use Database\Factories\growthStagesFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,5 +20,10 @@ class growth_stages extends Model
     public function crop()
     {
         return $this->hasMany(Crop::class);
+    }
+    protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return growthStagesFactory::new();
     }
 }

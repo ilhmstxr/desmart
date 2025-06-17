@@ -2,17 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Crop;
-use App\Models\expenses_category;
-use App\Models\Field;
+use App\Models\farms\Crop;
+use App\Models\Expense;
+use App\Models\finances\expenses_category;
+use App\Models\farms\Field;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class expensesFactory extends Factory
+class expenseFactory extends Factory
 {
+    protected $model = Expense::class;
+
     /**
      * Define the model's default state.
      *

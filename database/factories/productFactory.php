@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Crop;
-use App\Models\product_categories;
+use App\Models\farms\Crop;
+use App\Models\finances\Product;
+use App\Models\finances\product_categories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class productFactory extends Factory
 {
+    protected $model = Product::class;
+
     /**
      * Define the model's default state.
      *

@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\finances;
 
+use App\Models\farms\Crop;
+use App\Models\User;
+use Database\Factories\productFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -87,5 +90,11 @@ class Product extends Model
     {
         // Catatan: Ini bisa menyebabkan N+1 query. Lihat penjelasan di bawah.
         return $this->sales()->where('payment_status', 'paid')->sum('total_amount');
+    }
+
+      protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return productFactory::new();
     }
 }

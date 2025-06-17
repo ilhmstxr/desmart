@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\finances;
 
+use Database\Factories\marketplaceListingsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,5 +46,11 @@ class MarketplaceListing extends Model
     public function isExpired()
     {
         return $this->expiry_date && $this->expiry_date < now();
+    }
+
+    protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return marketplaceListingsFactory::new();
     }
 }

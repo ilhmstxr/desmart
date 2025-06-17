@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\MarketplaceListing;
-use App\Models\Product;
+use App\Models\finances\Sale;
+use App\Models\finances\MarketplaceListing;
+use App\Models\finances\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class salesFactory extends Factory
 {
+    protected $model = Sale::class;
+
     /**
      * Define the model's default state.
      *

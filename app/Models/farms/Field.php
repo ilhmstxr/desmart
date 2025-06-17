@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\farms;
 
+use Database\Factories\fieldFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,11 @@ class Field extends Model
     public function crops()
     {
         return $this->hasMany(Crop::class);
+    }
+
+    protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return fieldFactory::new();
     }
 }

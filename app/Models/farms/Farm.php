@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\farms;
 
+use App\Models\farms\Field;
+use App\Models\User;
+use Database\Factories\farmFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 
 class Farm extends Model
 {
@@ -25,5 +29,11 @@ class Farm extends Model
     public function fields()
     {
         return $this->hasMany(Field::class);
+    }
+
+    protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return farmFactory::new();
     }
 }

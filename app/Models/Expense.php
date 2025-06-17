@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\farms\Crop;
+use App\Models\farms\Field;
+use App\Models\finances\expenses_category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -9,7 +12,7 @@ use Illuminate\Support\Str;
 class Expense extends Model
 {
     use HasFactory;
-    protected $table = 'marketplace_listings';
+    protected $table = 'expenses';
     protected $fillable = [
         'expense_number',
         'expense_category_id',

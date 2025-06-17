@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\farms;
 
+use Database\Factories\cropFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,5 +40,10 @@ class Crop extends Model
     public function currentStage()
     {
         return $this->belongsTo(growth_stages::class);
+    }
+      protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return cropFactory::new();
     }
 }

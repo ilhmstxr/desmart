@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\finances;
 
+use App\Models\Expense;
+use Database\Factories\expensesCategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class expenses_category extends Model
 {
-     use HasFactory;
+    use HasFactory;
 
-    protected $table = 'expense_categories';
+    protected $table = 'expenses_categories';
 
     protected $fillable = ['name', 'description'];
 
@@ -19,5 +21,10 @@ class expenses_category extends Model
     public function expenses()
     {
         return $this->hasMany(Expense::class);
+    }
+    protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return expensesCategoryFactory::new();
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\finances;
 
+use Database\Factories\marketplacesFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class marketplaces extends Model
 {
-     use HasFactory;
+    use HasFactory;
 
     protected $fillable = ['name', 'url', 'is_active'];
 
@@ -21,5 +22,11 @@ class marketplaces extends Model
     public function listings()
     {
         return $this->hasMany(MarketplaceListing::class);
+    }
+
+    protected static function newFactory()
+    {
+        // Langsung menunjuk ke class factory yang benar
+        return marketplacesFactory::new();
     }
 }
