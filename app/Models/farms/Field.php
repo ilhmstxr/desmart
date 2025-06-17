@@ -11,6 +11,7 @@ class Field extends Model
     use HasFactory;
 
     protected $fillable = [
+        'farm_id',
         'name',
         'size',
         'soil_type',
@@ -18,7 +19,7 @@ class Field extends Model
         'coordinates',
         'irrigation_status',
         'last_tested',
-        'farm_id',
+        'altitude',
     ];
 
     protected $casts = [

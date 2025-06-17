@@ -15,7 +15,7 @@ class marketplaceListingsSeeder extends Seeder
      * Run the database seeds.
      */
 
-     public function run(): void
+    public function run(): void
     {
         $products = Product::all();
         $marketplaces = marketplaces::all();
@@ -24,6 +24,7 @@ class marketplaceListingsSeeder extends Seeder
             $this->command->info('Tidak dapat membuat listing karena data produk atau marketplace tidak ditemukan.');
             return;
         }
+
 
         // Buat satu listing untuk setiap produk di setiap marketplace
         foreach ($products as $product) {

@@ -27,6 +27,8 @@ class productSeeder extends Seeder
             return;
         }
 
+     
+
         Product::factory(20)->create(function () use ($categories, $crops, $users) {
             return [
                 'product_category_id' => $categories->random()->id,

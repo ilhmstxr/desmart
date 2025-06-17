@@ -18,14 +18,13 @@ class cropSeeder extends Seeder
     public function run(): void
     {
         $fields = Field::all();
-        $varieties = plant_varieties::all();
+        // $varieties = plant_varieties::all();
         $stages = growth_stages::all();
 
-        if ($fields->isNotEmpty() && $varieties->isNotEmpty() && $stages->isNotEmpty()) {
-            Crop::factory(10)->create(function () use ($fields, $varieties, $stages) {
+        if ($fields->isNotEmpty() &&  $stages->isNotEmpty()) {
+            Crop::factory(10)->create(function () use ($fields, $stages) {
                 return [
                     'field_id' => $fields->random()->id,
-                    'plant_variety_id' => $varieties->random()->id,
                     'current_stage_id' => $stages->random()->id,
                 ];
             });

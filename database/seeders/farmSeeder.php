@@ -14,7 +14,7 @@ class farmSeeder extends Seeder
      */
     public function run(): void
     {
-        $manager = User::where('role', 'managefr')->first();
+        $manager = User::where('role', 'manager')->first();
         if ($manager) {
             Farm::factory(5)->create(['owner_id' => $manager->id]);
         }else{

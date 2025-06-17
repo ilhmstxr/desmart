@@ -34,9 +34,9 @@ class fieldFactory extends Factory
             'farm_id' => Farm::factory(),
             'name' => $fieldInfo['name'],
             'size' => $this->faker->randomFloat(2, 1, 100),
-            'soil_type' => $this->faker->randomElement(['Latosol', 'Andosol', 'Grumosol', 'Regosol', 'Podsolik Merah Kuning', 'Aluvial']),
+            'soil_type' => $fieldInfo['soil_type'],
             'ph_level' => $this->faker->randomFloat(1, 5.5, 7.2),
-            'irrigation_status' => $this->faker->randomElement(['aktif', 'terjadwal', 'mati']),
+            'irrigation_status' => $this->faker->randomElement(['active', 'scheduled', 'off']),
             'last_tested' => $this->faker->date(),
             'altitude' => $this->faker->randomFloat(2, 100, 1000),
         ];
