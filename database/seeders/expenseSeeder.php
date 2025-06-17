@@ -26,8 +26,6 @@ class expenseSeeder extends Seeder
             Expense::factory(30)->create(function () use ($users, $crops, $fields, $categories) {
                 return [
                     'created_by' => $users->random()->id,
-                    'crop_id' => $crops->random()->id,
-                    'field_id' => $fields->random()->id,
                     'expenses_category_id' => $categories->random()->id,
                 ];
             });

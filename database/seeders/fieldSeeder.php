@@ -21,7 +21,7 @@ class fieldSeeder extends Seeder
             return;
         }
         foreach ($farms as $farm) {
-            Field::factory(10)->create(['farm_id' => $farm->id]);
+            Field::factory(4)->create(['farm_id' => $farm->id]);
         }
     }
 }
