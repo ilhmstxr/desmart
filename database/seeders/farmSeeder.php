@@ -14,9 +14,11 @@ class farmSeeder extends Seeder
      */
     public function run(): void
     {
-        $manager = User::where('role', 'manager')->first();
+        $manager = User::where('role', 'managefr')->first();
         if ($manager) {
-            Farm::factory(2)->create(['owner_id' => $manager->id]);
+            Farm::factory(5)->create(['owner_id' => $manager->id]);
+        }else{
+            $this->command->info('Tidak dapat membuat data farm karena pengguna manager tidak ditemukan.');
         }
     }
 }

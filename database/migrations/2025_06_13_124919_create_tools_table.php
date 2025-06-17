@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('tools', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->after('id');
+            $table->text('description')->nullable()->after('name');
+            $table->string('tool_photo_path')->nullable()->after('description');
             $table->timestamps();
         });
     }

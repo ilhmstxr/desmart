@@ -18,7 +18,7 @@ class expenseFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
+     *c
      * @return array<string, mixed>
      */
     public function definition(): array
@@ -35,6 +35,7 @@ class expenseFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 10, 1000),
             'payment_method' => $this->faker->randomElement(['cash', 'bank_transfer', 'check', 'credit_card']),
             'status' => 'paid',
+            'receipt_path' => 'receipts/' . $this->faker->uuid . '.jpg', // Menghasilkan path kwitansi dummy
             'notes' => $this->faker->sentence,
         ];
     }

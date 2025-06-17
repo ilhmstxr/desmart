@@ -18,7 +18,6 @@ return new class extends Migration
 
             $table->date('expense_date');
 
-
             $table->string('expense_number')->unique();
             $table->decimal('amount', 10, 2);
             $table->enum('payment_method', ['cash', 'bank_transfer', 'check', 'credit_card'])->default('cash');

@@ -33,9 +33,7 @@ class cropFactory extends Factory
     public function definition(): array
     {
         $plantName = $this->faker->randomElement(array_keys(self::$plantData));
-
         $varietyName = $this->faker->randomElement(self::$plantData[$plantName]);
-
         $plantVariety = plant_varieties::firstOrCreate(
             [
                 'plant_name' => $plantName,

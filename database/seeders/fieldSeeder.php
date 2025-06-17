@@ -15,8 +15,13 @@ class fieldSeeder extends Seeder
     public function run(): void
     {
         $farms = Farm::all();
+
+        if ($farms->isEmpty()) {
+            $this->command->info('No farms found. Skipping FieldSeeder.');
+            return;
+        }
         foreach ($farms as $farm) {
-            Field::factory(4)->create(['farm_id' => $farm->id]);
+            Field::factory(10)->create(['farm_id' => $farm->id]);
         }
     }
 }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
+            $table->string('profile_photo_path')->nullable()->after('password');
             $table->timestamps();
         });
 

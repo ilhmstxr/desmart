@@ -59,6 +59,7 @@ class farmFactory extends Factory
             'description' => $farmInfo['description'],
             'total_area' => $this->faker->randomFloat(2, 10, 1000),
             'status' => $this->faker->randomElement(['aktif', 'tidak aktif', 'diarsipkan']),
+            'farm_photo_path' => null,
         ];
     }
 }
