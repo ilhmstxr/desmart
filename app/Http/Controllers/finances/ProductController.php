@@ -4,8 +4,9 @@
 namespace App\Http\Controllers\finances;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\Crop;
+use App\Models\finances\Product;
+use App\Models\farms\Crop;
+use App\Models\finances\product_categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -23,14 +24,16 @@ class ProductController extends Controller
 
     public function create()
     {
+        $categories = product_categories::all();
         $crops = Crop::where('status', 'ready')->get();
-        return view('products.create', compact('crops'));
+        return view('products.create', compact('crops', 'categories'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'sku' => 'required|string|unique:products,sku,' . $product->id,
             'description' => 'required|string',
             'price_per_unit' => 'required|numeric|min:0',
             'unit_type' => 'required|string',
