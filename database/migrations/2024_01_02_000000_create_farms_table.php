@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable(); // deskripsi pertanian
             $table->decimal('total_area', 10, 2); // total luas pertanian (m2)
             $table->enum('status', ['active', 'inactive', 'archived'])->default('active'); // status, default active
-            $table->string('farm_photo_path')->nullable()->after('status');
+            $table->string('farm_photo_path')->nullable();
 
             // Timestamps
             $table->timestamps();
