@@ -24,15 +24,17 @@ class salesSeeder extends Seeder
             return;
         }
 
-        Sale::factory(50)->create(function () use ($listings, $users) {
-            // Ambil listing secara acak
+        $seedingSales = 50;
+
+        for ($i = 0; $i < $seedingSales; $i++) {
             $listing = $listings->random();
-            return [
+            $user = $users->random();
+            sale::factory()->create([
                 'marketplace_listing_id' => $listing->id,
                 'product_id' => $listing->product_id, // Ambil product_id dari listing
-                'created_by' => $users->random()->id,
-                'processed_by_user_id' => $users->random()->id,
-            ];
-        });
+                'created_by' => $user->id,
+                'processed_by_user_id' => $user->id,
+            ]);
+        };
     }
 }

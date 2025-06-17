@@ -16,23 +16,26 @@ class scheduleSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::where('role', 'worker')->get();
+        $workers = User::where('role', 'worker')->get();
         $creators = User::whereIn('role', ['admin', 'manager'])->get();
-        $crops = Crop::all();
+        $crops = Crop::with('field')->get();
 
-        if ($users->isEmpty() || $creators->isEmpty() || $crops->isEmpty()) {
+        if ($workers->isEmpty() || $creators->isEmpty() || $crops->isEmpty()) {
             $this->command->info('Tidak dapat membuat jadwal karena data pekerja, pembuat (admin/manager), atau tanaman tidak ditemukan.');
             return;
         }
 
-        Schedule::factory(15)->create(function () use ($users, $creators, $crops) {
+        $scheduling = 25;
+
+
+        for ($i = 0; $i < $scheduling; $i++) {
             $crop = $crops->random();
-            return [
-                'assigned_to' => $users->random()->id,
+            Schedule::factory()->create([
+                'assigned_to' => $workers->random()->id,
                 'created_by' => $creators->random()->id,
                 'crop_id' => $crop->id,
                 'field_id' => $crop->field_id, // Ambil field_id dari relasi crop
-            ];
-        });
+            ]);
+        }
     }
 }

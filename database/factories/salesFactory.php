@@ -23,28 +23,32 @@ class salesFactory extends Factory
     public function definition(): array
     {
         $quantity = $this->faker->numberBetween(1, 10);
-        $price = $this->faker->randomFloat(2, 5, 200);
+        $price = $this->faker->randomElement([15000, 25000, 30000, 50000, 75000]);
         $total = $quantity * $price;
         $commission = $total * ($this->faker->randomFloat(2, 1, 15) / 100);
 
         return [
-            'marketplace_listing_id' => MarketplaceListing::factory(),
-            'sale_number' => $this->faker->unique()->uuid,
-            'product_id' => Product::factory(),
             'customer_name' => $this->faker->name,
-            'customer_email' => $this->faker->safeEmail,
+            'customer_email' => $this->faker->unique()->safeEmail,
             'customer_phone' => $this->faker->phoneNumber,
+
             'quantity_sold' => $quantity,
             'unit_price' => $price,
             'total_amount' => $total,
             'commission_amount' => $commission,
             'net_amount' => $total - $commission,
-            'payment_status' => 'paid',
-            'sale_date' => $this->faker->date(),
-            'delivery_status' => 'pending',
-            'notes' => $this->faker->sentence,
-            'created_by' => User::factory(),
-            'processed_by_user_id' => User::factory(),
+
+            'payment_status' => $this->faker->randomElement(['paid', 'pending', 'refunded']),
+            'sale_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'delivery_status' => $this->faker->randomElement(['pending', 'shipped', 'delivered', 'cancelled']),
+            'notes' => $this->faker->randomElement(['Tolong packing yang aman.', null, 'Kirim secepatnya.', 'Diterima oleh satpam.']),
+
+            // yang ini?
+            // 'marketplace_listing_id' => MarketplaceListing::factory(),
+            // 'product_id' => Product::factory(),
+            // 'created_by' => User::factory(),
+            // 'sale_number' => $this->faker->unique()->uuid,
+            // 'processed_by_user_id' => User::factory(),
         ];
     }
 }
