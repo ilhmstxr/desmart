@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\finances;
 
-use App\Http\Controllers\Controller; 
-use App\Models\Sale;
-use App\Models\Product;
-use App\Models\MarketplaceListing;
+use App\Http\Controllers\Controller;
+use App\Models\finances\Sale;
+use App\Models\finances\Product;
+use App\Models\finances\MarketplaceListing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +26,7 @@ class SaleController extends Controller
         $products = Product::where('status', 'active')
             ->where('stock_quantity', '>', 0)
             ->get();
-        
+
         $marketplaceListings = MarketplaceListing::where('status', 'active')
             ->with('product')
             ->get();
@@ -50,7 +50,7 @@ class SaleController extends Controller
         ]);
 
         $product = Product::findOrFail($request->product_id);
-        
+
         if ($request->quantity_sold > $product->stock_quantity) {
             return back()->withErrors(['quantity_sold' => 'Quantity sold cannot exceed available stock.']);
         }
@@ -58,14 +58,14 @@ class SaleController extends Controller
         DB::transaction(function () use ($request, $product) {
             $totalAmount = $request->quantity_sold * $request->unit_price;
             $commissionAmount = 0;
-            
+
             if ($request->marketplace_listing_id) {
                 $listing = MarketplaceListing::findOrFail($request->marketplace_listing_id);
                 $commissionAmount = ($totalAmount * $listing->commission_rate) / 100;
-                
+
                 // Update listing quantity sold
                 $listing->increment('quantity_sold', $request->quantity_sold);
-                
+
                 // Update listing status if fully sold
                 if ($listing->quantity_sold >= $listing->quantity_listed) {
                     $listing->update(['status' => 'sold']);
@@ -93,7 +93,7 @@ class SaleController extends Controller
 
             // Update product stock
             $product->decrement('stock_quantity', $request->quantity_sold);
-            
+
             // Update product status if out of stock
             if ($product->stock_quantity <= 0) {
                 $product->update(['status' => 'out_of_stock']);
@@ -137,12 +137,12 @@ class SaleController extends Controller
     {
         // Restore product stock
         $sale->product->increment('stock_quantity', $sale->quantity_sold);
-        
+
         // Update marketplace listing if applicable
         if ($sale->marketplace_listing_id) {
             $listing = $sale->marketplaceListing;
             $listing->decrement('quantity_sold', $sale->quantity_sold);
-            
+
             if ($listing->status === 'sold' && $listing->quantity_sold < $listing->quantity_listed) {
                 $listing->update(['status' => 'active']);
             }

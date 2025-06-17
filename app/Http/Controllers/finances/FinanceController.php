@@ -5,9 +5,9 @@ namespace App\Http\Controllers\finances;
 
 use App\Http\Controllers\Controller; 
 
-use App\Models\Product;
-use App\Models\Sale;
-use App\Models\Expense;
+use App\Models\finances\Product;
+use App\Models\finances\Sale;
+use App\Models\finances\Expense;
 use App\Models\MarketplaceListing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\finances;
 
 use App\Models\farms\Crop;
 use App\Models\farms\Field;

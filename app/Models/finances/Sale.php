@@ -48,7 +48,15 @@ class Sale extends Model
     {
         return $this->belongsTo(User::class, 'processed_by_user_id');
     }
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
     // --- BOOT METHOD ---
 
     protected static function boot()
