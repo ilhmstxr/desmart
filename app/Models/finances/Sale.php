@@ -55,7 +55,7 @@ class Sale extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->hasOneThrough(Product::class, MarketplaceListing::class, 'id', 'id', 'marketplace_listing_id', 'product_id');
     }
     // --- BOOT METHOD ---
 

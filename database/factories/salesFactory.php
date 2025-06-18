@@ -27,12 +27,19 @@ class salesFactory extends Factory
         $total = $quantity * $price;
         $commission = $total * ($this->faker->randomFloat(2, 1, 15) / 100);
 
-        return [
-            'customer_name' => $this->faker->name,
-            'customer_email' => $this->faker->unique()->safeEmail,
-            'customer_phone' => $this->faker->phoneNumber,
+        $listing = MarketplaceListing::factory()->create();
 
-            'quantity_sold' => $quantity,
+        $quantity = $this->faker->numberBetween(1, min(10, $listing->quantity_listed));
+
+        return [
+            // 'customer_name' => $this->faker->name,
+            // 'customer_email' => $this->faker->unique()->safeEmail,
+            // 'customer_phone' => $this->faker->phoneNumber,
+            'marketplace_listing_id' => $listing->id,
+            'user_id' => User::factory(),
+
+            
+            'quantity' => $quantity,
             'unit_price' => $price,
             'total_amount' => $total,
             'commission_amount' => $commission,
@@ -44,7 +51,6 @@ class salesFactory extends Factory
             'notes' => $this->faker->randomElement(['Tolong packing yang aman.', null, 'Kirim secepatnya.', 'Diterima oleh satpam.']),
 
             // yang ini?
-            // 'marketplace_listing_id' => MarketplaceListing::factory(),
             // 'product_id' => Product::factory(),
             // 'created_by' => User::factory(),
             // 'sale_number' => $this->faker->unique()->uuid,

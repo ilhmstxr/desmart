@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\finances\Product;
 use App\Models\finances\Sale;
 use App\Models\finances\Expense;
-use App\Models\MarketplaceListing;
+use App\Models\finances\MarketplaceListing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

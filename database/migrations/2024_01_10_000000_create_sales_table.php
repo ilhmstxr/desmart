@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('marketplace_listing_id')->constrained()->onDelete('cascade');
             $table->string('sale_number')->unique();
-            $table->foreignId('product_id')->constrained();
             $table->string('customer_name');
             $table->string('customer_email')->nullable();
             $table->string('customer_phone')->nullable();
