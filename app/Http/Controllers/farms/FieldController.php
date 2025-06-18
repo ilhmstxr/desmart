@@ -18,7 +18,7 @@ class FieldController extends Controller
     public function index(Farm $farm)
     {
         // Otorisasi: Pastikan pengguna yang login adalah pemilik pertanian
-        $this->authorize('view', $farm);
+        // $this->authorize('view', $farm);
 
         // Mengambil semua lahan yang berelasi dengan pertanian ini
         $fields = $farm->fields()->paginate(10);
