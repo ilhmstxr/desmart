@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('marketplace_name'); // Local Market, Online Store, etc.
-            $table->decimal('listing_price', 10, 2);
+            $table->decimal('listing_price', 10, 2)->default(0);
             $table->integer('quantity_listed');
             $table->enum('status', ['pending', 'active', 'sold', 'expired', 'cancelled'])->default('pending');
             $table->date('expiry_date')->nullable();

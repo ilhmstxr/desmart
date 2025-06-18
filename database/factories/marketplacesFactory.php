@@ -17,13 +17,12 @@ class marketplacesFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    private static $marketplaces = [
+    public static $marketplaces = [
         ['name' => 'Tokopedia', 'url' => 'https://www.tokopedia.com', 'is_active' => true],
         ['name' => 'Shopee', 'url' => 'https://www.shopee.co.id', 'is_active' => true],
         ['name' => 'Bukalapak', 'url' => 'https://www.bukalapak.com', 'is_active' => true],
         ['name' => 'Pasar Tani Lokal', 'url' => null, 'is_active' => true],
         ['name' => 'Website Pertanian Sendiri', 'url' => 'https://myfarm.com', 'is_active' => false],
-
     ];
 
     public function definition(): array

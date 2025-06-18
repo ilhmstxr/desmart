@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('marketplaces', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique(); // Contoh: Tokopedia, Shopee, Website Sendiri
+            $table->string('name'); // Contoh: Tokopedia, Shopee, Website Sendiri
             $table->string('url')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

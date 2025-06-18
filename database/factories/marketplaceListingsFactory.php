@@ -25,11 +25,10 @@ class marketplaceListingsFactory extends Factory
             'product_id' => Product::factory(),
             'marketplace_id' => marketplaces::factory(),
             'marketplace_name' => $this->faker->company,
-            // 'listing_price' => $this->faker->randomFloat(2, 5, 200),
+            'listing_price' => $this->faker->randomFloat(2, 5, 200),
             'quantity_listed' => $this->faker->numberBetween(10, 500),
             'status' => 'active',
             'expiry_date' => $this->faker->dateTimeBetween('+1 month', '+6 months'),
-            // 'listing_notes' => $this->faker->sentence,
             'commission_rate' => $this->faker->randomFloat(2, 1, 15),
             'listed_date' => now(),
         ];

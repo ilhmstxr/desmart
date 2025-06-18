@@ -29,9 +29,8 @@ class salesSeeder extends Seeder
         for ($i = 0; $i < $seedingSales; $i++) {
             $listing = $listings->random();
             $user = $users->random();
-            sale::factory()->create([
+            Sale::factory()->create([
                 'marketplace_listing_id' => $listing->id,
-                'product_id' => $listing->product_id, // Ambil product_id dari listing
                 'created_by' => $user->id,
                 'processed_by_user_id' => $user->id,
             ]);
