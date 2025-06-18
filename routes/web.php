@@ -42,9 +42,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Farm management (Admin and Managers only)
-Route::middleware('role:admin,manager')->group(function () {
+// Route::middleware('role:admin,manager')->group(function () {
     Route::resource('farms', FarmController::class);
-});
+// });
 
 // Field and Crop management (All authenticated users)
 Route::resource('fields', FieldController::class);

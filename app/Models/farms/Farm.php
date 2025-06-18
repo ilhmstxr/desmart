@@ -19,6 +19,9 @@ class Farm extends Model
         'location',
         'total_area',
         'owner_id',
+        'status',
+        'farm_photo_path',
+        'boundary',
     ];
 
     public function owner()

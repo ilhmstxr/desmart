@@ -4,7 +4,7 @@ namespace App\Http\Controllers\farms;
 
 use App\Http\Controllers\Controller; 
 
-use App\Models\plant_varieties;
+use App\Models\farmsplant_varieties;
 use Illuminate\Http\Request;
 
 class PlantVarietiesController extends Controller
