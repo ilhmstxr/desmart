@@ -1,9 +1,8 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\farms\Crop;
-use App\Models\Expense;
+use App\Models\finances\Expense;
 use App\Models\finances\expenses_category;
 use App\Models\farms\Field;
 use App\Models\User;
@@ -12,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class expenseFactory extends Factory
+class ExpenseFactory extends Factory
 {
     protected $model = Expense::class;
 

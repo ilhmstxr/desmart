@@ -19,7 +19,8 @@ class userSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'role' => 'admin',
-            'password' => Hash::make('password'),
+            'password' => bcrypt('password'), // Menggunakan bcrypt untuk hashing password
+            // 'password' => Hash::make('password'),
         ]);
 
         User::factory()->create([

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Expense;
+use App\Models\finances\Expense;
 use App\Models\farms\Crop;
 use App\Models\farms\Field;
 use App\Models\finances\expenses_category;

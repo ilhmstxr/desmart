@@ -32,6 +32,14 @@ class Expense extends Model
         'expense_date' => 'datetime',
     ];
 
+    /**
+     * Get a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return \Database\Factories\ExpenseFactory::new();
+    }
+
     // --- RELASI ---
 
     public function category()
