@@ -63,6 +63,30 @@ class DashboardController extends Controller
         $totalFarms = $userFarms->count();
         $newFarmsThisMonth = $userFarms->where('created_at', '>=', Carbon::now()->startOfMonth())->count();
 
+        // $tasks = Schedule::where('created_by', Auth::id())->get();
+        
+
+        // return $tasks;
+        $taskCounts = Schedule::where('created_by', Auth::id())
+            ->select('priority', DB::raw('count(*) as total'))
+            ->groupBy('priority')
+            ->pluck('total', 'priority')
+            ->all();
+
+        // return $taskCounts;
+
+        // 2. Menyiapkan data untuk dikirim ke view
+        // Menambahkan prioritas 'high' sesuai skema baru
+        $taskPriorityData = [
+            'urgent' => $taskCounts['urgent'] ?? 0,
+            'high' => $taskCounts['high'] ?? 0,
+            'medium' => $taskCounts['medium'] ?? 0,
+            'low' => $taskCounts['low'] ?? 0,
+        ];
+
+        $totalTasks = array_sum($taskPriorityData);
+
+        // return $taskPriorityData;
         // SCHEDULES
         $upcomingSchedules = Schedule::with('assignedTo')
             ->where('scheduled_at', '>=', now())
@@ -105,6 +129,7 @@ class DashboardController extends Controller
         // return $newFarmsThisMonth;
 
         $summary = [
+            'total_tasks' => $totalTasks,
             'total_farms' => $totalFarms,
             'farm_change' => $newFarmsThisMonth,
             'crop_change' => 5, // Dummy data
@@ -126,7 +151,8 @@ class DashboardController extends Controller
             'upcomingSchedules',
             'suppliesStatus',
             'marketPrices',
-            'farmsData'
+            'farmsData',
+            'taskPriorityData'
         ));
     }
     // return view('dashboard.index');

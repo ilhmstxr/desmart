@@ -406,6 +406,31 @@
                                 </svg>
                             </div>
                         </div>
+
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                        {{-- prioritas --}}
+                        <div class="bg-white p-6 rounded-xl shadow-lg col-span-1 md:col-span-2">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">Tugas Berdasarkan Prioritas</h3>
+                                    <p class="text-sm text-gray-500">Total Tugas Aktif: {{ $summary['total_tasks'] ?? 0 }}
+                                    </p>
+                                </div>
+                                <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                                    <!-- Heroicon: Clipboard List -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Container untuk canvas chart -->
+                            <div class="mt-4 h-64">
+                                <canvas id="taskPriorityChart"></canvas>
+                            </div>
+                        </div>
                         <!-- Pendapatan -->
                         <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
                             <div>
@@ -580,7 +605,7 @@
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-
+                // DATA FARMS
                 const farmsData = @json($farmsData ?? []);
 
                 // 2. Mempersiapkan data untuk Chart.js
@@ -622,6 +647,86 @@
                                     callbacks: {
                                         label: function(context) {
                                             return ` ${context.label}: ${context.raw.toLocaleString()} ha`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+                // DATA PRIORITAS SCHEDLES
+                const taskPriorityData = @json($taskPriorityData ?? ['urgent' => 0, 'medium' => 0, 'low' => 0]);
+
+                // 2. Mempersiapkan data untuk format yang dibutuhkan Chart.js
+                const taskLabels = ['Urgent', 'Medium', 'Low'];
+                const taskDataPoints = [
+                    taskPriorityData.urgent,
+                    taskPriorityData.medium,
+                    taskPriorityData.low
+                ];
+
+                // 3. Merender Bar Chart jika elemen canvas ditemukan
+                const ctx = document.getElementById('taskPriorityChart');
+                if (ctx) {
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: taskLabels,
+                            datasets: [{
+                                label: 'Jumlah Tugas',
+                                data: taskDataPoints,
+                                backgroundColor: [
+                                    'rgba(239, 68, 68, 0.7)', // Merah untuk Urgent
+                                    'rgba(245, 158, 11, 0.7)', // Oranye untuk Medium
+                                    'rgba(34, 197, 94, 0.7)' // Hijau untuk Low
+                                ],
+                                borderColor: [
+                                    'rgb(239, 68, 68)',
+                                    'rgb(245, 158, 11)',
+                                    'rgb(34, 197, 94)'
+                                ],
+                                borderWidth: 1,
+                                borderRadius: 5,
+                                barThickness: 40
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        // Memastikan sumbu Y hanya menampilkan bilangan bulat
+                                        stepSize: 1
+                                    }
+                                },
+                                x: {
+                                    grid: {
+                                        display: false // Menghilangkan grid vertikal agar lebih bersih
+                                    }
+                                }
+                            },
+                            plugins: {
+                                // Menyembunyikan legenda karena label di bawah sudah cukup jelas
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    backgroundColor: '#1f2937', // gray-800
+                                    titleFont: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    bodyFont: {
+                                        size: 12
+                                    },
+                                    displayColors: false, // Tidak menampilkan kotak warna di tooltip
+                                    callbacks: {
+                                        label: function(context) {
+                                            return `Jumlah: ${context.raw}`;
                                         }
                                     }
                                 }
