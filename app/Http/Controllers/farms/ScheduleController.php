@@ -30,7 +30,7 @@ class ScheduleController extends Controller
             $query->where('priority', $request->priority);
         }
 
-        $schedules = $query->latest('scheduled_at')->paginate(15);
+        $schedules = $query->oldest('scheduled_at')->paginate(15);
 
         // Anda perlu membuat view: resources/views/schedules/index.blade.php
         return view('schedules.index', compact('schedules'));

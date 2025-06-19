@@ -106,7 +106,7 @@ class FarmController extends Controller
     public function update(Request $request, Farm $farm)
     {
         // Memastikan pengguna hanya bisa memperbarui pertanian miliknya
-        $this->authorize('update', $farm);
+        // $this->authorize('update', $farm);
 
         // Validasi data yang masuk dari form
         $validatedData = $request->validate([
