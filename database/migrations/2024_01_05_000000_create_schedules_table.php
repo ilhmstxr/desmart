@@ -19,7 +19,7 @@ return new class extends Migration
             $table->datetime('completed_at')->nullable();
             $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled'])->default('pending');
             $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('medium');
-            $table->foreignId('crop_id')->nullable()->constrained();
+            $table->foreignId('crop_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->json('notes')->nullable();
             $table->foreignId('field_id')->nullable()->constrained();
             $table->timestamps();
