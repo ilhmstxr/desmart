@@ -1,7 +1,7 @@
     @extends('layout.app')
 
     @section('content')
-        <!-- Area Konten Halaman -->
+        {{-- <!-- Area Konten Halaman -->
         <div class="flex-1 p-6 overflow-y-auto">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Kolom Kiri & Tengah -->
@@ -351,5 +351,268 @@
                     }
                 }
             });
+        </script> --}}
+
+        <div class="flex-1 p-6 overflow-y-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Kolom Kiri & Tengah -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Kartu Ringkasan -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Total Lahan -->
+                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Lahan</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_area'] ?? 'N/A' }} Ha</p>
+                                <p
+                                    class="text-xs {{ ($summary['area_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
+                                    {{ ($summary['area_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['area_change'] ?? 0 }}
+                                    Ha dari bulan lalu
+                                </p>
+                            </div>
+                            <div class="bg-green-100 text-green-600 p-2 rounded-lg">
+                                {{-- Icon bisa disesuaikan --}}
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <!-- Total Ternak -->
+                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Ternak</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_livestock'] ?? 'N/A' }} Ekor
+                                </p>
+                                <p
+                                    class="text-xs {{ ($summary['livestock_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
+                                    {{ ($summary['livestock_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['livestock_change'] ?? 0 }}
+                                    Ekor dari bulan lalu
+                                </p>
+                            </div>
+                            <div class="bg-blue-100 text-blue-600 p-2 rounded-lg">
+                                {{-- Icon bisa disesuaikan --}}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <!-- Hasil Panen -->
+                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Hasil Panen</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_harvest'] ?? 'N/A' }} Ton</p>
+                                <p
+                                    class="text-xs {{ ($summary['harvest_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
+                                    {{ ($summary['harvest_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['harvest_change'] ?? 0 }}
+                                    Ton dari bulan lalu
+                                </p>
+                            </div>
+                            <div class="bg-yellow-100 text-yellow-600 p-2 rounded-lg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 12V8a2 2 0 00-2-2H6a2 2 0 00-2 2v4m16 0v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4m16 0l-8 5-8-5">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        <!-- Pendapatan -->
+                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Pendapatan</p>
+                                <p class="text-2xl font-bold text-gray-800">Rp
+                                    {{ number_format($summary['total_revenue'] ?? 0, 0, ',', '.') }}</p>
+                                <p
+                                    class="text-xs {{ ($summary['revenue_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
+                                    {{ ($summary['revenue_change'] ?? 0) >= 0 ? 'Rp ' : '-Rp ' }}{{ number_format(abs($summary['revenue_change'] ?? 0), 0, ',', '.') }}
+                                    dari bulan lalu
+                                </p>
+                            </div>
+                            <div class="bg-purple-100 text-purple-600 p-2 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cuaca & Peta Lahan -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Prakiraan Cuaca -->
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-gray-800 mb-2">Prakiraan Cuaca</h3>
+                            <div class="bg-blue-500 text-white rounded-lg p-4 flex justify-between items-center bg-cover">
+                                <div>
+                                    <p class="text-sm">{{ $weather['location'] ?? 'N/A' }}</p>
+                                    <p class="text-4xl font-bold">{{ $weather['temperature'] ?? 'N/A' }}°C</p>
+                                    <p class="text-sm">{{ $weather['condition'] ?? 'N/A' }}</p>
+                                </div>
+                                <div class="space-y-2 text-center text-sm">
+                                    @foreach ($weather['forecast'] ?? [] as $forecast)
+                                        <div>
+                                            <p>{{ $forecast['day'] }}</p>
+                                            <p>{{ $forecast['temp'] }}°C</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Peta Lahan -->
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-semibold text-gray-800">Peta Lahan</h3>
+                                <a href="{{-- route('fields.index') --}}" class="text-sm text-blue-600 hover:underline">Lihat
+                                    Detail</a>
+                            </div>
+                            {{-- Logika untuk peta bisa lebih kompleks, ini contoh sederhana --}}
+                            <div class="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">Peta akan ditampilkan di sini</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistik Hasil Panen -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <h3 class="font-semibold text-gray-800 mb-4">Statistik Hasil Panen (6 Bulan Terakhir)</h3>
+                        <canvas id="harvestChart" height="120"></canvas>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Aktivitas Mendatang -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-gray-800">Aktivitas Mendatang</h3>
+                            <a href="{{ route('schedules.index') }}" class="text-sm text-blue-600 hover:underline">Lihat
+                                Semua</a>
+                        </div>
+                        <div class="space-y-4">
+                            @forelse ($upcomingSchedules as $schedule)
+                                <div class="flex items-start">
+                                    <div class="bg-green-100 text-green-600 p-2 rounded-lg mr-4"><svg class="w-5 h-5"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg></div>
+                                    <div>
+                                        <p class="font-medium text-sm">{{ $schedule->title }}</p>
+                                        <p class="text-xs text-gray-500"
+                                            title="{{ $schedule->scheduled_at->format('d M Y, H:i') }}">
+                                            {{ $schedule->scheduled_at->diffForHumans() }}</p>
+                                        <p class="text-xs text-gray-500 font-semibold mt-1">Ditugaskan:
+                                            {{ $schedule->assignedTo->name ?? 'N/A' }}</p>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-sm text-gray-500 text-center">Tidak ada aktivitas mendatang.</p>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <!-- Status Perlengkapan -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-gray-800">Status Perlengkapan</h3>
+                            <a href="{{-- route('supplies.index') --}}" class="text-sm text-blue-600 hover:underline">Kelola</a>
+                        </div>
+                        <div class="space-y-3">
+                            @forelse ($suppliesStatus as $supply)
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <p>{{ $supply->name }}</p>
+                                        <p class="text-gray-500">{{ $supply->percentage }}%</p>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                        <div class="bg-green-500 h-1.5 rounded-full"
+                                            style="width: {{ $supply->percentage }}%"></div>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-sm text-gray-500 text-center">Data perlengkapan tidak tersedia.</p>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <!-- Harga Pasar -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-gray-800">Harga Pasar</h3>
+                            <a href="#" class="text-sm text-blue-600 hover:underline">Lihat Pasar</a>
+                        </div>
+                        <ul class="space-y-3">
+                            @forelse ($marketPrices as $price)
+                                <li class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <span class="w-2 h-2 rounded-full mr-3 {{ $price->trend_color }}"></span>
+                                        <p class="text-sm">{{ $price->commodity_name }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Rp
+                                            {{ number_format($price->price, 0, ',', '.') }}/kg</p>
+                                        <p class="text-xs {{ $price->trend_color }} text-right">
+                                            {{ $price->trend_percentage > 0 ? '+' : '' }}{{ $price->trend_percentage }}%
+                                        </p>
+                                    </div>
+                                </li>
+                            @empty
+                                <p class="text-sm text-gray-500 text-center">Data harga tidak tersedia.</p>
+                            @endforelse
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Memastikan data chart ada sebelum membuat grafik
+            const harvestChartData = @json($harvestChartData ?? ['labels' => [], 'datasets' => []]);
+
+            if (harvestChartData.labels.length > 0) {
+                const ctx = document.getElementById('harvestChart');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: harvestChartData, // Menggunakan data dinamis dari controller
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                align: 'end',
+                                labels: {
+                                    usePointStyle: true,
+                                    boxWidth: 8
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    drawOnChartArea: false,
+                                    drawBorder: false
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }
+                });
+            }
         </script>
     @endsection
