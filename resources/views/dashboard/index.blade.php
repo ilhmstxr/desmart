@@ -358,60 +358,18 @@
                 <!-- Kolom Kiri & Tengah -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Kartu Ringkasan -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Total Lahan -->
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Total Lahan</p>
-                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_area'] ?? 'N/A' }} Ha</p>
-                                <p
-                                    class="text-xs {{ ($summary['area_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
-                                    {{ ($summary['area_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['area_change'] ?? 0 }}
-                                    Ha dari bulan lalu
-                                </p>
-                            </div>
-                            <div class="bg-green-100 text-green-600 p-2 rounded-lg">
-                                {{-- Icon bisa disesuaikan --}}
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                    </path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <!-- Total Ternak -->
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Total Ternak</p>
-                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_livestock'] ?? 'N/A' }} Ekor
-                                </p>
-                                <p
-                                    class="text-xs {{ ($summary['livestock_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
-                                    {{ ($summary['livestock_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['livestock_change'] ?? 0 }}
-                                    Ekor dari bulan lalu
-                                </p>
-                            </div>
-                            <div class="bg-blue-100 text-blue-600 p-2 rounded-lg">
-                                {{-- Icon bisa disesuaikan --}}
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                        </div>
+                  
+
                         <!-- Hasil Panen -->
                         <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
                             <div>
                                 <p class="text-sm text-gray-500">Hasil Panen</p>
-                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_harvest'] ?? 'N/A' }} Ton</p>
+                                <p class="text-2xl font-bold text-gray-800">
+                                    {{ number_format($summary['total_harvest'] ?? 0, 1) }} Ton</p>
                                 <p
                                     class="text-xs {{ ($summary['harvest_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
                                     {{ ($summary['harvest_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['harvest_change'] ?? 0 }}
-                                    Ton dari bulan lalu
+                                    Ton
                                 </p>
                             </div>
                             <div class="bg-yellow-100 text-yellow-600 p-2 rounded-lg">
@@ -432,7 +390,6 @@
                                 <p
                                     class="text-xs {{ ($summary['revenue_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
                                     {{ ($summary['revenue_change'] ?? 0) >= 0 ? 'Rp ' : '-Rp ' }}{{ number_format(abs($summary['revenue_change'] ?? 0), 0, ',', '.') }}
-                                    dari bulan lalu
                                 </p>
                             </div>
                             <div class="bg-purple-100 text-purple-600 p-2 rounded-lg">
@@ -444,6 +401,27 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Total Ternak -->
+                    {{-- <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Ternak</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_livestock'] ?? 'N/A' }} Ekor
+                                </p>
+                                <p
+                                    class="text-xs {{ ($summary['livestock_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
+                                    {{ ($summary['livestock_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['livestock_change'] ?? 0 }}
+                                    Ekor
+                                </p>
+                            </div>
+                            <div class="bg-blue-100 text-blue-600 p-2 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                        </div> --}}
 
                     <!-- Cuaca & Peta Lahan -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -473,7 +451,6 @@
                                 <a href="{{-- route('fields.index') --}}" class="text-sm text-blue-600 hover:underline">Lihat
                                     Detail</a>
                             </div>
-                            {{-- Logika untuk peta bisa lebih kompleks, ini contoh sederhana --}}
                             <div class="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg flex items-center justify-center">
                                 <p class="text-gray-500">Peta akan ditampilkan di sini</p>
                             </div>
@@ -483,7 +460,9 @@
                     <!-- Statistik Hasil Panen -->
                     <div class="bg-white p-4 rounded-lg shadow-sm">
                         <h3 class="font-semibold text-gray-800 mb-4">Statistik Hasil Panen (6 Bulan Terakhir)</h3>
-                        <canvas id="harvestChart" height="120"></canvas>
+                        <div class="h-64">
+                            <canvas id="harvestChart"></canvas>
+                        </div>
                     </div>
                 </div>
 
@@ -574,45 +553,50 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            // Memastikan data chart ada sebelum membuat grafik
-            const harvestChartData = @json($harvestChartData ?? ['labels' => [], 'datasets' => []]);
+            document.addEventListener('DOMContentLoaded', function() {
 
-            if (harvestChartData.labels.length > 0) {
-                const ctx = document.getElementById('harvestChart');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: harvestChartData, // Menggunakan data dinamis dari controller
-                    options: {
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                align: 'end',
-                                labels: {
-                                    usePointStyle: true,
-                                    boxWidth: 8
-                                }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    drawOnChartArea: false,
-                                    drawBorder: false
+
+                // Bar Chart untuk Statistik Panen
+                const harvestChartCtx = document.getElementById('harvestChart');
+                const harvestChartData = @json($harvestChartData ?? null);
+                if (harvestChartCtx && harvestChartData && harvestChartData.labels.length > 0) {
+                    new Chart(harvestChartCtx.getContext('2d'), {
+                        type: 'bar',
+                        data: harvestChartData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                    align: 'end',
+                                    labels: {
+                                        usePointStyle: true,
+                                        boxWidth: 8
+                                    }
                                 }
                             },
-                            x: {
-                                grid: {
-                                    display: false
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                },
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
                                 }
                             }
-                        },
-                        responsive: true,
-                        maintainAspectRatio: false,
-                    }
-                });
-            }
+                        }
+                    });
+                } else if (harvestChartCtx) {
+                    const ctx = harvestChartCtx.getContext('2d');
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.font = '14px "Inter", sans-serif';
+                    ctx.fillStyle = '#9ca3af';
+                    ctx.fillText('Data Panen Belum Tersedia', harvestChartCtx.width / 2, harvestChartCtx.height / 2);
+                }
+            });
         </script>
     @endsection
