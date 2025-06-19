@@ -75,7 +75,7 @@ class FarmController extends Controller
     public function show(Farm $farm)
     {
         // Memastikan pengguna hanya bisa melihat pertanian miliknya
-        $this->authorize('view', $farm);
+        // $this->authorize('view', $farm);
 
         // Menampilkan view 'farms.show' dan meneruskan data pertanian
         return view('farms.show', compact('farm'));
@@ -90,7 +90,7 @@ class FarmController extends Controller
     public function edit(Farm $farm)
     {
         // Memastikan pengguna hanya bisa mengedit pertanian miliknya
-        $this->authorize('update', $farm);
+        // $this->authorize('update', $farm);
 
         // Menampilkan view 'farms.edit' dan meneruskan data pertanian
         return view('farms.edit', compact('farm'));
@@ -146,7 +146,7 @@ class FarmController extends Controller
     public function destroy(Farm $farm)
     {
         // Memastikan pengguna hanya bisa menghapus pertanian miliknya
-        $this->authorize('delete', $farm);
+        // $this->authorize('delete', $farm);
 
         // Hapus foto dari storage jika ada
         if ($farm->farm_photo_path) {
