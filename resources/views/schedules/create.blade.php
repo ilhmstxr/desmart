@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 @section('content')
-    <div class="p-8">
+    {{-- <div class="p-8">
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-900">Create Schedule</h1>
             <p class="text-gray-600">Add a new task or activity to the schedule</p>
@@ -142,6 +142,157 @@
                     <button type="submit"
                         class="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700">
                         Create Schedule
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div> --}}
+
+    <div class="p-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Buat Jadwal Baru</h1>
+            <p class="text-gray-600">Tambahkan tugas atau aktivitas baru ke dalam jadwal.</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <form action="{{ route('schedules.store') }}" method="POST">
+                @csrf
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Judul Tugas *</label>
+                            <input type="text" id="title" name="title" value="{{ old('title') }}" required
+                                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                            @error('title')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Tipe *</label>
+                            <select id="type" name="type" required
+                                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                                <option value="">-- Pilih Tipe --</option>
+                                <option value="planting" {{ old('type') == 'planting' ? 'selected' : '' }}>Penanaman
+                                </option>
+                                <option value="irrigation" {{ old('type') == 'irrigation' ? 'selected' : '' }}>Penyiraman
+                                </option>
+                                <option value="fertilizing" {{ old('type') == 'fertilizing' ? 'selected' : '' }}>Pemupukan
+                                </option>
+                                <option value="harvesting" {{ old('type') == 'harvesting' ? 'selected' : '' }}>Panen
+                                </option>
+                                <option value="maintenance" {{ old('type') == 'maintenance' ? 'selected' : '' }}>Perawatan
+                                </option>
+                                <option value="inspection" {{ old('type') == 'inspection' ? 'selected' : '' }}>Inspeksi
+                                </option>
+                            </select>
+                            @error('type')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="scheduled_at" class="block text-sm font-medium text-gray-700 mb-1">Waktu Dijadwalkan
+                                *</label>
+                            <input type="datetime-local" id="scheduled_at" name="scheduled_at"
+                                value="{{ old('scheduled_at') }}" required
+                                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                            @error('scheduled_at')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="priority" class="block text-sm font-medium text-gray-700 mb-1">Prioritas *</label>
+                            <select id="priority" name="priority" required
+                                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                                <option value="low" {{ old('priority', 'medium') == 'low' ? 'selected' : '' }}>Rendah
+                                </option>
+                                <option value="medium" {{ old('priority', 'medium') == 'medium' ? 'selected' : '' }}>Sedang
+                                </option>
+                                <option value="high" {{ old('priority', 'medium') == 'high' ? 'selected' : '' }}>Tinggi
+                                </option>
+                                <option value="urgent" {{ old('priority', 'medium') == 'urgent' ? 'selected' : '' }}>
+                                    Mendesak</option>
+                            </select>
+                            @error('priority')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="field_id" class="block text-sm font-medium text-gray-700 mb-1">Lahan
+                                (Opsional)</label>
+                            <select id="field_id" name="field_id"
+                                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                                <option value="">-- Pilih Lahan --</option>
+                                @foreach ($fields as $field)
+                                    <option value="{{ $field->id }}"
+                                        {{ old('field_id') == $field->id ? 'selected' : '' }}>
+                                        {{ $field->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('field_id')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="crop_id" class="block text-sm font-medium text-gray-700 mb-1">Tanaman
+                                (Opsional)</label>
+                            <select id="crop_id" name="crop_id"
+                                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                                <option value="">-- Pilih Tanaman --</option>
+                                @foreach ($crops as $crop)
+                                    <option value="{{ $crop->id }}"
+                                        {{ old('crop_id') == $crop->id ? 'selected' : '' }}>
+                                        {{ $crop->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('crop_id')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="assigned_to" class="block text-sm font-medium text-gray-700 mb-1">Tugaskan Kepada
+                                (Opsional)</label>
+                            <select id="assigned_to" name="assigned_to"
+                                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                                <option value="">-- Pilih Pengguna --</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}"
+                                        {{ old('assigned_to') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('assigned_to')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                        <textarea id="description" name="description" rows="4"
+                            class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 flex justify-end">
+                    <a href="{{ route('schedules.index') }}"
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 mr-2">
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700">
+                        Buat Jadwal
                     </button>
                 </div>
             </form>

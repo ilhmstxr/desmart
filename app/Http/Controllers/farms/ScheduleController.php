@@ -2,125 +2,148 @@
 
 namespace App\Http\Controllers\farms;
 
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 use App\Models\Schedule;
-use App\Models\Field;
-use App\Models\Crop;
+use App\Models\farms\Field;
+use App\Models\farms\Crop;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the resource.
+     * READ: Menampilkan semua jadwal.
+     */
+    public function index(Request $request)
     {
-        // $user = Auth::user();
-        
-        // $query = Schedule::with(['field', 'crop', 'assignedTo', 'createdBy']);
-        
-        // if (!$user->isAdmin()) {
-        //     $query->where(function($q) use ($user) {
-        //         $q->where('assigned_to', $user->id)
-        //           ->orWhere('created_by', $user->id);
-        //     });
-        // }
-        
-        // $schedules = $query->orderBy('scheduled_at')->paginate(15);
-        // $upcomingCount = Schedule::upcoming()->count();
-        // $overdueCount = Schedule::overdue()->count();
-        
-        // return view('schedules.index', compact('schedules', 'upcomingCount', 'overdueCount'));
-        return view('schedules.index');
+        // Eager load relasi untuk performa
+        $query = Schedule::with(['assignedTo', 'createdBy', 'crop', 'field']);
+
+        // Contoh fitur filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
+        $schedules = $query->latest('scheduled_at')->paginate(15);
+
+        // Anda perlu membuat view: resources/views/schedules/index.blade.php
+        return view('schedules.index', compact('schedules'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     * CREATE: Menampilkan form untuk membuat jadwal baru.
+     */
     public function create()
     {
-        // $fields = Field::all();
-        // $crops = Crop::all();
-        // $users = User::where('is_active', true)->get();
-        
-        $fields = [1,2,3,4];
-        $crops = 1;
-        $users = 1;
+        // Mengambil data untuk mengisi dropdown di form
+        $users = User::orderBy('name')->get();
+        $crops = Crop::orderBy('name')->get();
+        $fields = Field::orderBy('name')->get();
 
-        return view('schedules.create', compact('fields', 'crops', 'users'));
-        // return view('schedules.create');
+        // Anda perlu membuat view: resources/views/schedules/create.blade.php
+        return view('schedules.create', compact('users', 'crops', 'fields'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     * CREATE: Menyimpan jadwal baru ke database.
+     */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'type' => 'required|in:planting,irrigation,fertilizing,harvesting,maintenance,inspection',
-            'scheduled_at' => 'required|date|after:now',
-            'priority' => 'required|in:low,medium,high,urgent',
-            'field_id' => 'nullable|exists:fields,id',
-            'crop_id' => 'nullable|exists:crops,id',
+            'type' => ['required', Rule::in(['planting', 'irrigation', 'fertilizing', 'harvesting', 'maintenance', 'inspection'])],
+            'scheduled_at' => 'required|date',
+            'priority' => ['required', Rule::in(['low', 'medium', 'high', 'urgent'])],
             'assigned_to' => 'nullable|exists:users,id',
+            'crop_id' => 'nullable|exists:crops,id',
+            'field_id' => 'nullable|exists:fields,id',
+            'notes' => 'nullable|json',
         ]);
 
-        Schedule::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'type' => $request->type,
-            'scheduled_at' => $request->scheduled_at,
-            'priority' => $request->priority,
-            'field_id' => $request->field_id,
-            'crop_id' => $request->crop_id,
-            'assigned_to' => $request->assigned_to,
-            'created_by' => Auth::id(),
-        ]);
+        $validatedData['created_by'] = Auth::id();
 
-        return redirect()->route('schedules.index')->with('success', 'Schedule created successfully!');
+        // Sekarang, $validatedData sudah berisi semua kolom yang dibutuhkan.
+        Schedule::create($validatedData);
+
+        return redirect()->route('schedules.index')->with('success', 'Jadwal baru berhasil dibuat.');
     }
 
+    /**
+     * Display the specified resource.
+     * READ: Menampilkan detail satu jadwal.
+     */
     public function show(Schedule $schedule)
     {
-        $schedule->load(['field', 'crop', 'assignedTo', 'createdBy']);
+        // Memuat relasi untuk ditampilkan di detail
+        $schedule->load(['assignedTo', 'createdBy', 'crop', 'field']);
+
+        // Anda perlu membuat view: resources/views/schedules/show.blade.php
         return view('schedules.show', compact('schedule'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     * UPDATE: Menampilkan form untuk mengedit jadwal.
+     */
     public function edit(Schedule $schedule)
     {
-        $fields = Field::all();
-        $crops = Crop::all();
-        $users = User::where('is_active', true)->get();
-        
-        return view('schedules.edit', compact('schedule', 'fields', 'crops', 'users'));
+        // Mengambil data untuk mengisi dropdown di form
+        $users = User::orderBy('name')->get();
+        $crops = Crop::orderBy('name')->get();
+        $fields = Field::orderBy('name')->get();
+
+        // Anda perlu membuat view: resources/views/schedules/edit.blade.php
+        return view('schedules.edit', compact('schedule', 'users', 'crops', 'fields'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     * UPDATE: Memperbarui jadwal di database.
+     */
     public function update(Request $request, Schedule $schedule)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'type' => 'required|in:planting,irrigation,fertilizing,harvesting,maintenance,inspection',
+            'type' => ['required', Rule::in(['planting', 'irrigation', 'fertilizing', 'harvesting', 'maintenance', 'inspection'])],
             'scheduled_at' => 'required|date',
-            'status' => 'required|in:pending,in_progress,completed,cancelled',
-            'priority' => 'required|in:low,medium,high,urgent',
-            'field_id' => 'nullable|exists:fields,id',
-            'crop_id' => 'nullable|exists:crops,id',
+            'status' => ['required', Rule::in(['pending', 'in_progress', 'completed', 'cancelled'])],
+            'priority' => ['required', Rule::in(['low', 'medium', 'high', 'urgent'])],
             'assigned_to' => 'nullable|exists:users,id',
+            'crop_id' => 'nullable|exists:crops,id',
+            'field_id' => 'nullable|exists:fields,id',
+            'notes' => 'nullable|json',
         ]);
 
-        $updateData = $request->only([
-            'title', 'description', 'type', 'scheduled_at', 
-            'status', 'priority', 'field_id', 'crop_id', 'assigned_to'
-        ]);
-
-        if ($request->status === 'completed' && !$schedule->completed_at) {
-            $updateData['completed_at'] = now();
+        // Logika tambahan: isi 'completed_at' jika status diubah menjadi 'completed'
+        if ($validatedData['status'] == 'completed' && is_null($schedule->completed_at)) {
+            $validatedData['completed_at'] = now();
+        } elseif ($validatedData['status'] != 'completed') {
+            $validatedData['completed_at'] = null;
         }
 
-        $schedule->update($updateData);
+        $schedule->update($validatedData);
 
-        return redirect()->route('schedules.index')->with('success', 'Schedule updated successfully!');
+        return redirect()->route('schedules.index')->with('success', 'Jadwal berhasil diperbarui.');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     * DELETE: Menghapus jadwal.
+     */
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
-        return redirect()->route('schedules.index')->with('success', 'Schedule deleted successfully!');
+
+        return redirect()->route('schedules.index')->with('success', 'Jadwal berhasil dihapus.');
     }
 }

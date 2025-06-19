@@ -2,15 +2,25 @@
 
 namespace App\Models;
 
+use App\Models\farms\Crop;
+use App\Models\farms\Field;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Container\Attributes\Auth;
 
 class Schedule extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
+        'assigned_to',
+        'created_by',
         'title',
         'description',
         'type',
@@ -18,53 +28,58 @@ class Schedule extends Model
         'completed_at',
         'status',
         'priority',
-        'field_id',
         'crop_id',
-        'assigned_to',
-        'created_by',
         'notes',
+        'field_id',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'scheduled_at' => 'datetime',
         'completed_at' => 'datetime',
-        'notes' => 'array',
+        'notes' => 'array', // Mengubah JSON menjadi array secara otomatis
     ];
 
-    public function field()
-    {
-        return $this->belongsTo(Field::class);
-    }
+    /**
+     * Otomatis mengisi 'created_by' saat jadwal baru dibuat.
+     */
+   
 
-    public function crop()
-    {
-        return $this->belongsTo(Crop::class);
-    }
+    // RELASI DATABASE
 
-    public function assignedTo()
-    {
-        return $this->belongsTo(User::class, 'assigned_to');
-    }
-
+    /**
+     * Relasi ke user yang membuat jadwal.
+     */
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function scopeUpcoming($query)
+    /**
+     * Relasi ke user yang ditugaskan.
+     */
+    public function assignedTo()
     {
-        return $query->where('scheduled_at', '>', now())
-                    ->where('status', '!=', 'completed');
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 
-    public function scopeOverdue($query)
+    /**
+     * Relasi ke tanaman terkait.
+     */
+    public function crop()
     {
-        return $query->where('scheduled_at', '<', now())
-                    ->where('status', '!=', 'completed');
+        return $this->belongsTo(Crop::class);
     }
 
-    public function isOverdue()
+    /**
+     * Relasi ke lahan terkait.
+     */
+    public function field()
     {
-        return $this->scheduled_at < now() && $this->status !== 'completed';
+        return $this->belongsTo(Field::class);
     }
 }
