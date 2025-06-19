@@ -15,7 +15,7 @@ class FarmController extends Controller
     {
         // Mengambil semua data pertanian milik user yang sedang terautentikasi
         $farms = Farm::where('owner_id', Auth::id())->latest()->paginate(10);
-
+        
         // Menampilkan view 'farms.index' dan meneruskan data pertanian
         return view('farms.index', compact('farms'));
     }

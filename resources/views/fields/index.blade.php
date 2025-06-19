@@ -12,12 +12,12 @@
                     <div>
                         <h2 class="text-2xl font-semibold text-gray-800">Manajemen Lahan</h2>
                         <p class="text-sm text-gray-600 mt-1">Untuk Pertanian: 
-                            <a href="{{ route('farms.show', $farm->id) }}" class="font-bold text-indigo-600 hover:underline">{{ $farm->name }}</a>
+                            <a href="" class="font-bold text-indigo-600 hover:underline">{{ $farm->name }}</a>
                         </p>
                     </div>
                     <div class="mt-4 sm:mt-0">
                         <!-- PERBAIKAN: Route diarahkan ke farms.fields.create dengan parameter farm -->
-                        <a href="{{ route('farms.fields.create', $farm->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
+                        <a href="{{ route('fields.create', $farm->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
                             Tambah Lahan Baru
                         </a>
                     </div>
@@ -42,7 +42,6 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- PERBAIKAN: Menggunakan loop @forelse untuk menampilkan data dinamis -->
                             @forelse ($fields as $field)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $field->name }}</td>
