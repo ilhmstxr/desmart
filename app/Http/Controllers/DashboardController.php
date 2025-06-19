@@ -11,28 +11,32 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+
+
     public function index()
     {
         $user = Auth::user();
+        $m_user = User::find($user->id);
 
         $stats = [
-            'total_farms' => $user->isAdmin() ? Farm::count() : $user->farms()->count(),
-            'total_fields' => $user->isAdmin() ? Field::count() : Field::whereHas('farm', function ($q) use ($user) {
+            'total_farms' => $m_user->isAdmin() ? Farm::count() : $m_user->farms()->count(),
+            'total_fields' => $m_user->isAdmin() ? Field::count() : Field::whereHas('farm', function ($q) use ($user) {
                 $q->where('owner_id', $user->id);
             })->count(),
-            'active_crops' => $user->isAdmin() ? Crop::count() : Crop::whereHas('field.farm', function ($q) use ($user) {
-                $q->where('owner_id', $user->id);
+            'active_crops' => $m_user->isAdmin() ? Crop::count() : Crop::whereHas('field.farm', function ($q) use ($m_user) {
+                $q->where('owner_id', $m_user->id);
             })->count(),
-            'total_managers' => $user->isAdmin() ? User::where('role', 'manager')->count() : 0,
+            'total_managers' => $m_user->isAdmin() ? User
+            ::where('role', 'manager')->count() : 0,
         ];
 
-        $recentCrops = $user->isAdmin()
+        $recentCrops = $m_user->isAdmin()
             ? Crop::with('field')->latest()->take(5)->get()
             : Crop::whereHas('field.farm', function ($q) use ($user) {
                 $q->where('owner_id', $user->id);
             })->with('field')->latest()->take(5)->get();
 
-        return view('dashboard', compact('stats', 'recentCrops'));
-        return view('dashboard.index');
+        return view('dashboard.index', compact('stats', 'recentCrops'));
+        // return view('dashboard.index');
     }
 }

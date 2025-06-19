@@ -20,6 +20,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', //
+        'phone',
+        'address',
+        'is_active'
     ];
 
     /**
@@ -43,5 +47,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+
+    public function isManager()
+    {
+        return $this->role === 'manager'; //
+    }
+
+    /**
+     * Memeriksa apakah pengguna memiliki peran 'worker'.
+     *
+     * @return bool
+     */
+    public function isWorker()
+    {
+        return $this->role === 'worker'; //
+    }
+    public function farms()
+    {
+        return $this->hasMany(\App\Models\farms\Farm::class, 'owner_id');
     }
 }

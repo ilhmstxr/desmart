@@ -19,7 +19,7 @@ class userSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'role' => 'admin',
-            'password' => bcrypt('password'), // Menggunakan bcrypt untuk hashing password
+            'password' => bcrypt('123'), // Menggunakan bcrypt untuk hashing password
             // 'password' => Hash::make('password'),
         ]);
 
