@@ -43,16 +43,25 @@ class DashboardController extends Controller
 
 
 
-        // Mengambil semua farm milik pengguna yang sedang login
         $userFarms = Farm::where('owner_id', Auth::id())->get();
 
-        // Jika pengguna tidak punya farm, tampilkan view dengan data kosong
-        if ($userFarms->isEmpty()) {
-            return view('dashboard.index-empty'); // Buat view ini untuk pesan selamat datang
-        }
+        // 2. Jika pengguna tidak punya farm, bisa arahkan ke view khusus
+        // if ($userFarms->isEmpty()) {
 
-        // Dapatkan semua ID dari farm milik pengguna
-        $userFarmIds = $userFarms->pluck('id');
+        // }
+
+        // 3. Menyiapkan data untuk Pie Chart dari farm milik pengguna
+        // Ini akan mengambil nama dan total area dari koleksi farm yang sudah didapat
+        $farmsData = $userFarms->where('total_area', '>', 0)->map(function ($farm) {
+            return [
+                'name' => $farm->name,
+                'total_area' => $farm->total_area,
+            ];
+        });
+
+        // 4. Menyiapkan data summary untuk card berdasarkan farm milik pengguna
+        $totalFarms = $userFarms->count();
+        $newFarmsThisMonth = $userFarms->where('created_at', '>=', Carbon::now()->startOfMonth())->count();
 
         // SCHEDULES
         $upcomingSchedules = Schedule::with('assignedTo')
@@ -91,10 +100,13 @@ class DashboardController extends Controller
             (object)['commodity_name' => 'Tomat', 'price' => 15000, 'trend_percentage' => 0, 'trend_color' => 'text-gray-500'],
         ]);
 
+        // return $farmsData;
+        // return $totalFarms;
+        // return $newFarmsThisMonth;
+
         $summary = [
-            'total_farms' => $userFarms->count(), // Total pertanian milik pengguna
-            'farm_change' => 1, // Dummy data, ganti dengan logika perubahan
-            'total_crops' => Crop::whereIn('field_id', Field::whereIn('farm_id', $userFarmIds)->pluck('id'))->count(),
+            'total_farms' => $totalFarms,
+            'farm_change' => $newFarmsThisMonth,
             'crop_change' => 5, // Dummy data
             'total_livestock' => 124, // Dummy data
             'livestock_change' => 12, // Dummy data
@@ -113,7 +125,8 @@ class DashboardController extends Controller
             'weather',
             'upcomingSchedules',
             'suppliesStatus',
-            'marketPrices'
+            'marketPrices',
+            'farmsData'
         ));
     }
     // return view('dashboard.index');

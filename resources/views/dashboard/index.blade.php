@@ -358,7 +358,32 @@
                 <!-- Kolom Kiri & Tengah -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Kartu Ringkasan -->
-                  
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between gap-4">
+                            <div class="bg-green-100 text-green-600 p-2 rounded-lg">
+                                {{-- Icon bisa disesuaikan --}}
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Total Pertanian</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ $summary['total_farms'] ?? 'N/A' }}</p>
+                                <p
+                                    class="text-xs {{ ($summary['farm_change'] ?? 0) >= 0 ? 'text-green-500' : 'text-red-500' }} mt-1">
+                                    {{ ($summary['farm_change'] ?? 0) >= 0 ? '+' : '' }}{{ $summary['farm_change'] ?? 0 }}
+                                    dari bulan lalu
+                                </p>
+                            </div>
+                            <div class="w-50 h-50 flex-shrink-0">
+                                <canvas id="farmAreaDistributionChart"></canvas>
+                            </div>
+                        </div>
 
                         <!-- Hasil Panen -->
                         <div class="bg-white p-4 rounded-lg shadow-sm flex items-start justify-between">
@@ -556,6 +581,54 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
 
+                const farmsData = @json($farmsData ?? []);
+
+                // 2. Mempersiapkan data untuk Chart.js
+                const labels = farmsData.map(farm => farm.name);
+                const data = farmsData.map(farm => farm.total_area);
+
+                // 3. Merender Chart jika ada data
+                if (data.length > 0) {
+                    const ctx = document.getElementById('farmAreaDistributionChart').getContext('2d');
+                    const farmChart = new Chart(ctx, {
+                        type: 'pie', // Menggunakan tipe 'pie' untuk chart lingkaran
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Luas Lahan (ha)',
+                                data: data,
+                                backgroundColor: [
+                                    'rgba(52, 211, 153, 0.9)',
+                                    'rgba(96, 165, 250, 0.9)',
+                                    'rgba(251, 191, 36, 0.9)',
+                                    'rgba(248, 113, 113, 0.9)',
+                                    'rgba(167, 139, 250, 0.9)',
+                                    'rgba(251, 146, 60, 0.9)'
+                                ],
+                                borderColor: '#ffffff',
+                                borderWidth: 1.5
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false, // Penting agar chart bisa mengisi divnya
+                            plugins: {
+                                // Menonaktifkan legenda dan tooltip agar chart tetap bersih di ruang yang kecil
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    enabled: true, // Anda bisa set ke `true` jika ingin tooltip tetap ada
+                                    callbacks: {
+                                        label: function(context) {
+                                            return ` ${context.label}: ${context.raw.toLocaleString()} ha`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
 
                 // Bar Chart untuk Statistik Panen
                 const harvestChartCtx = document.getElementById('harvestChart');
